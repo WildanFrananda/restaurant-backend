@@ -2,6 +2,7 @@ import { MikroOrmModule } from "@mikro-orm/nestjs"
 import { Module } from "@nestjs/common"
 import { JwtModule } from "@nestjs/jwt"
 import WalletController from "src/api/http/controllers/wallet/wallet.controller"
+import SseController from "src/api/sse/controllers/sse.controller"
 import WalletGateway from "src/api/websocket/gateways/wallet/wallet.gateway"
 import WsAdapterHandler from "src/application/handlers/ws-adapter.handler"
 import WsBinary from "src/application/handlers/ws-binary.handler"
@@ -59,6 +60,6 @@ import UserRepositoryImpl from "src/infrastructure/database/repositories/user.re
     WsRateLimiterMiddleware,
     SseService
   ],
-  controllers: [WalletController]
+  controllers: [WalletController, SseController]
 })
 export class WalletModule {}
