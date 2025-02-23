@@ -14,7 +14,7 @@ import WsBinary from "src/application/handlers/ws-binary.handler"
 import WsAuthMiddleware from "src/common/middlewares/websocket/ws-auth.middleware"
 import WsRateLimiterMiddleware from "src/common/middlewares/websocket/ws-rate-limit.middleware"
 
-type ToType = { emit: <T>(event: string, data: T) => void }
+type ToType = { emit: <T>(type: string, data: T) => void }
 
 abstract class BaseWebSocketGateway<T extends BaseEvent = BaseEvent>
   implements OnGatewayConnection, OnGatewayDisconnect {
@@ -65,21 +65,25 @@ abstract class BaseWebSocketGateway<T extends BaseEvent = BaseEvent>
 
   protected emit<T>(
     client: WebSocketClient,
-    event: string,
+    eventName: string,
     data: T,
     callback?: (response: unknown) => void
   ): void {
-    const message: WebSocketMessage<T> = { event, data }
+    const message = {
+      event: eventName,
+      data,
+    }
 
     if (callback) {
-      message.acknowledgementId = this.wsAdapterHandler.createAcknowledgement(callback)
+      ;(message as WebSocketMessage).acknowledgementId =
+        this.wsAdapterHandler.createAcknowledgement(callback)
     }
 
     client.send(JSON.stringify(message))
   }
 
-  protected broadcast<T>(event: string, data: T, room?: string): void {
-    const message = JSON.stringify({ event, data })
+  protected broadcast<T>(type: string, data: T, room?: string): void {
+    const message = JSON.stringify({ type, data })
 
     if (room) {
       this.roomHandler.broadcast(room, message)
@@ -94,8 +98,8 @@ abstract class BaseWebSocketGateway<T extends BaseEvent = BaseEvent>
 
   protected to(room: string): ToType {
     return {
-      emit: <T>(event: string, data: T): void => {
-        this.broadcast(event, data, room)
+      emit: <T>(type: string, data: T): void => {
+        this.broadcast(type, data, room)
       }
     }
   }

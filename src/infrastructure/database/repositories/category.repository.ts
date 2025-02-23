@@ -2,14 +2,14 @@ import { Reference } from "@mikro-orm/core"
 import { InjectRepository } from "@mikro-orm/nestjs"
 import { EntityManager, EntityRepository } from "@mikro-orm/postgresql"
 import { Inject, Injectable } from "@nestjs/common"
-import Booking from "src/domain/entities/booking.entity"
-import BookingRepository from "src/domain/repositories/booking.repository"
+import Category from "src/domain/entities/category.entity"
+import CategoryRepository from "src/domain/repositories/category.repository"
 
 @Injectable()
-class BookingRepositoryImpl extends BookingRepository {
+class CategoryRepositoryImpl extends CategoryRepository {
   constructor(
-    @InjectRepository(Booking)
-    private readonly bookingRepository: EntityRepository<Booking>,
+    @InjectRepository(Category)
+    private readonly categoryRepository: EntityRepository<Category>,
     @Inject(EntityManager)
     private readonly em: EntityManager
   ) {
@@ -23,9 +23,9 @@ class BookingRepositoryImpl extends BookingRepository {
     await this.em.flush()
   }
 
-  public override async findBookingId(id: string): Promise<Booking | null> {
-    return await this.bookingRepository.findOne({ id })
+  public override async findAllCategories(): Promise<Category[]> {
+    return await this.categoryRepository.findAll()
   }
 }
 
-export default BookingRepositoryImpl
+export default CategoryRepositoryImpl

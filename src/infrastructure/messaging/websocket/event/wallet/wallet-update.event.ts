@@ -10,6 +10,8 @@ interface WalletUpdateEvent extends BaseEvent {
     transactionType: TransactionType
     updatedAt: string
   }
+  timestamp?: number
+  targetUserId?: string
 }
 
 export default WalletUpdateEvent

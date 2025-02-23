@@ -6,9 +6,10 @@ import TransactionType from "src/domain/enums/transaction-type.enum"
 import BookingRepository from "src/domain/repositories/booking.repository"
 import TransactionRepository from "src/domain/repositories/transaction.repository"
 import UserRepository from "src/domain/repositories/user.repository"
-import SseService from "../sse/sse.service"
 import WalletUpdateEvent from "src/infrastructure/messaging/websocket/event/wallet/wallet-update.event"
 import AdminBookingNotification from "src/common/types/admin-booking.type"
+import WalletSSEService from "../sse/wallet-sse.service"
+import AdminWalletSSEService from "../sse/admin-wallet-sse.service"
 
 @Injectable()
 class WalletService {
@@ -17,7 +18,8 @@ class WalletService {
     private readonly userRepository: UserRepository,
     private readonly bookingRepository: BookingRepository,
     private readonly walletGateway: WalletGateway,
-    private readonly sseService: SseService
+    private readonly walletSSEService: WalletSSEService,
+    private readonly adminWalletSSEService: AdminWalletSSEService
   ) {}
 
   public async deposit(
@@ -62,7 +64,7 @@ class WalletService {
     }
 
     this.walletGateway.notifyWalletUpdate(payload)
-    this.sseService.notifyWalletUpdate(payload)
+    this.walletSSEService.notifyWalletUpdate(payload)
 
     return { message: "Deposit successful" }
   }
@@ -126,17 +128,19 @@ class WalletService {
     }
 
     this.walletGateway.notifyWalletUpdate(payload)
-    this.sseService.notifyWalletUpdate(payload)
 
     if (booking.type === "home dine in" && booking.status === "confirmed") {
       const adminPayload: AdminBookingNotification = {
-        event: "adminBookingNotification",
-        bookingId: booking.id,
-        message: "New bookings require chef selection",
-        schedule: booking.schedule.toISOString(),
-        createdAt: new Date().toISOString()
+        type: "adminBookingNotification",
+        data: {
+          bookingId: booking.id,
+          message: "New bookings require chef selection!",
+          schedule: booking.schedule.toISOString(),
+          createdAt: new Date().toISOString()
+        }
       }
-      this.sseService.notifyAdminBooking(adminPayload)
+
+      this.adminWalletSSEService.notifyAdminsOfWalletUpdate(adminPayload)
     }
 
     return { message: "Payment successful" }

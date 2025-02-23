@@ -2,7 +2,7 @@ import type WalletUpdateEvent from "src/infrastructure/messaging/websocket/event
 import type WalletEvent from "src/infrastructure/messaging/websocket/event/wallet/wallet.event"
 import type WebSocketClient from "src/infrastructure/messaging/websocket/websocket-client"
 import { Injectable } from "@nestjs/common"
-import { WebSocketGateway } from "@nestjs/websockets"
+import { SubscribeMessage, WebSocketGateway } from "@nestjs/websockets"
 import { Request } from "express"
 import WsAdapterHandler from "src/application/handlers/ws-adapter.handler"
 import WsBinary from "src/application/handlers/ws-binary.handler"
@@ -102,6 +102,7 @@ class WalletGateway extends BaseWebSocketGateway<WalletEvent> {
     })
   }
 
+  @SubscribeMessage("walletUpdated")
   public notifyWalletUpdate(walletData: Omit<WalletUpdateEvent, "type">): void {
     this.logger.log(
       `Sending wallet update to user ${walletData.data.userId}: ${JSON.stringify(walletData)}`
@@ -112,7 +113,13 @@ class WalletGateway extends BaseWebSocketGateway<WalletEvent> {
     if (userConnections) {
       userConnections.forEach((client) => {
         if (client.readyState === client.OPEN) {
-          this.emit(client, "walletUpdated", walletData.data)
+          this.emit(client, "walletUpdated", {
+            userId: walletData.data.userId,
+            newBalance: walletData.data.newBalance,
+            amountChanged: walletData.data.amountChanged,
+            transactionType: walletData.data.transactionType,
+            updatedAt: walletData.data.updatedAt
+          })
         }
       })
     }

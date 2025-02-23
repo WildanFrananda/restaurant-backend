@@ -1,9 +1,12 @@
 type AdminBookingNotification = {
-  event: "adminBookingNotification"
-  bookingId: string
-  message: string
-  schedule: string
-  createdAt: string
+  type: "adminBookingNotification"
+  data: {
+    bookingId: string
+    message: string
+    schedule: string
+    createdAt: string
+  }
+  timestamp?: number
 }
 
 export default AdminBookingNotification

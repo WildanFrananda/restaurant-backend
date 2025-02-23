@@ -2,13 +2,14 @@ import { MikroOrmModule } from "@mikro-orm/nestjs"
 import { Module } from "@nestjs/common"
 import { JwtModule } from "@nestjs/jwt"
 import WalletController from "src/api/http/controllers/wallet/wallet.controller"
-import SseController from "src/api/sse/controllers/sse.controller"
+import WalletSSEController from "src/api/sse/controllers/wallet-sse.controller"
 import WalletGateway from "src/api/websocket/gateways/wallet/wallet.gateway"
 import WsAdapterHandler from "src/application/handlers/ws-adapter.handler"
 import WsBinary from "src/application/handlers/ws-binary.handler"
 import WsConnection from "src/application/handlers/ws-connection.handler"
 import WsRoom from "src/application/handlers/ws-room.handler"
-import SseService from "src/application/services/sse/sse.service"
+import AdminWalletSSEService from "src/application/services/sse/admin-wallet-sse.service"
+import WalletSSEService from "src/application/services/sse/wallet-sse.service"
 import WalletService from "src/application/services/wallet/wallet.service"
 import WsConfig from "src/common/config/ws-config.type"
 import DEFAULT_WS_CONFIG from "src/common/config/ws.config"
@@ -58,8 +59,9 @@ import UserRepositoryImpl from "src/infrastructure/database/repositories/user.re
     WsBinary,
     WsAuthMiddleware,
     WsRateLimiterMiddleware,
-    SseService
+    WalletSSEService,
+    AdminWalletSSEService
   ],
-  controllers: [WalletController, SseController]
+  controllers: [WalletController, WalletSSEController]
 })
 export class WalletModule {}

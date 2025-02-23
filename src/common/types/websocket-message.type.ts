@@ -1,5 +1,5 @@
 interface WebSocketMessage<T = unknown> {
-  event: string
+  type: string
   data: T
 }
 
