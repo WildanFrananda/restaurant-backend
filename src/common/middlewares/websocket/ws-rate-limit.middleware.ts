@@ -1,6 +1,6 @@
-import { Injectable } from "@nestjs/common";
-import WsConfig from "src/common/config/ws-config.type";
-import WebSocketClient from "src/infrastructure/messaging/websocket/websocket-client";
+import { Injectable } from "@nestjs/common"
+import WsConfig from "src/common/config/ws-config.type"
+import WebSocketClient from "src/infrastructure/messaging/websocket/websocket-client"
 
 @Injectable()
 class WsRateLimiterMiddleware {

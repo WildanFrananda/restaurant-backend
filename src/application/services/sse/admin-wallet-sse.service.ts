@@ -21,7 +21,7 @@ class AdminWalletSSEService extends BaseSSE<AdminBookingEvent> {
     return JSON.stringify(event.data)
   }
 
-  public async notifyAdminsOfWalletUpdate(walletUpdate: Omit<AdminBookingEvent, "type">): Promise<void> {
+  public notifyAdminsOfWalletUpdate(walletUpdate: Omit<AdminBookingEvent, "type">): void {
     const event: AdminBookingEvent = {
       type: "adminBookingNotification",
       ...walletUpdate,

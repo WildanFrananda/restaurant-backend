@@ -13,11 +13,15 @@ class JwtStrategy extends PassportStrategy(Strategy, "jwt") {
     })
   }
 
-  public override validate(payload: { sub: string; email: string; rules: string[] }): JwtType {
+  public override validate(payload: {
+    sub: string
+    email: string
+    roles: string | string[]
+  }): JwtType {
     return {
       userId: payload.sub,
       email: payload.email,
-      roles: Array.isArray(payload.rules) ? payload.rules : [payload.rules]
+      roles: Array.isArray(payload.roles) ? payload.roles : [payload.roles]
     }
   }
 }

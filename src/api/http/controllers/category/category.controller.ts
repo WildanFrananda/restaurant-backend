@@ -9,7 +9,7 @@ class CategoriesController {
 
   @Get()
   public async getCategories(): Promise<Category[]> {
-    return this.categoriesService.getCategories()
+    return await this.categoriesService.getCategories()
   }
 }
 

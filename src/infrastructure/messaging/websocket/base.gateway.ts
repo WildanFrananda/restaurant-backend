@@ -1,23 +1,23 @@
-import type { Server } from "ws"
-import type { Request } from "express"
-import type WebSocketClient from "./websocket-client"
-import type WebSocketMessage from "./websocket-message"
-import { OnGatewayConnection, OnGatewayDisconnect, WebSocketServer } from "@nestjs/websockets"
 import { Logger } from "@nestjs/common"
-import WebSocket from "ws"
-import WsRoom from "src/application/handlers/ws-room.handler"
+import { OnGatewayConnection, OnGatewayDisconnect, WebSocketServer } from "@nestjs/websockets"
+import type { Request } from "express"
 import WsAdapterHandler from "src/application/handlers/ws-adapter.handler"
-import BaseEvent from "./event/base.event"
-import WsConfig from "src/common/config/ws-config.type"
-import WsConnection from "src/application/handlers/ws-connection.handler"
 import WsBinary from "src/application/handlers/ws-binary.handler"
+import WsConnection from "src/application/handlers/ws-connection.handler"
+import WsRoom from "src/application/handlers/ws-room.handler"
+import WsConfig from "src/common/config/ws-config.type"
 import WsAuthMiddleware from "src/common/middlewares/websocket/ws-auth.middleware"
 import WsRateLimiterMiddleware from "src/common/middlewares/websocket/ws-rate-limit.middleware"
+import type { Server } from "ws"
+import WebSocket from "ws"
+import BaseEvent from "./event/base.event"
+import type WebSocketClient from "./websocket-client"
+import type WebSocketMessage from "./websocket-message"
 
 type ToType = { emit: <T>(type: string, data: T) => void }
 
 abstract class BaseWebSocketGateway<T extends BaseEvent = BaseEvent>
-  implements OnGatewayConnection, OnGatewayDisconnect {
+implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   protected readonly server!: Server
 
@@ -34,7 +34,7 @@ abstract class BaseWebSocketGateway<T extends BaseEvent = BaseEvent>
     protected readonly rateLimitMiddleware: WsRateLimiterMiddleware
   ) {}
 
-  public async handleConnection(client: WebSocketClient, request: Request): Promise<void> {
+  public handleConnection(client: WebSocketClient, request: Request): void {
     try {
       client.id = this.generateId()
       client.rooms = new Set<string>()
@@ -42,14 +42,14 @@ abstract class BaseWebSocketGateway<T extends BaseEvent = BaseEvent>
 
       const token = this.extractToken(request)
 
-      await this.authMiddleware.authenticate(client, token)
+      this.authMiddleware.authenticate(client, token)
       this.clients.add(client)
       this.logger.log(`Client connected: ${client.id}`)
       this.setupMessageHandler(client)
       this.setupDisconnectHandler(client)
       this.setupBinaryHandler(client)
     } catch (error: unknown) {
-      this.logger.error(`Connection failed: ${client.id} ${error}`)
+      this.logger.error(`Connection failed: ${client.id} ${String(error)}`)
       client.close(1008, error as string)
     }
   }
@@ -71,7 +71,7 @@ abstract class BaseWebSocketGateway<T extends BaseEvent = BaseEvent>
   ): void {
     const message = {
       event: eventName,
-      data,
+      data
     }
 
     if (callback) {
@@ -125,7 +125,7 @@ abstract class BaseWebSocketGateway<T extends BaseEvent = BaseEvent>
           })
         }
       } catch (error: unknown) {
-        this.logger.error(`Failed to parse message: ${error}`)
+        this.logger.error(`Failed to parse message: ${String(error)}`)
         this.emit(client, "error", {
           message: "Message parsing error",
           code: 500
@@ -194,7 +194,7 @@ abstract class BaseWebSocketGateway<T extends BaseEvent = BaseEvent>
     client: WebSocketClient,
     type: string,
     data: Buffer
-  ): Promise<void>
+  ): void
 
   private generateId(): string {
     return `ws-${Math.random().toString(36).substring(2, 15)}`

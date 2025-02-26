@@ -9,6 +9,9 @@ import { PostgreSqlDriver } from "@mikro-orm/postgresql"
 import { UserProfileModule } from "./application/modules/profile/user-profile.module"
 import { WalletModule } from "./application/modules/wallet/wallet.module"
 import { TransactionModule } from "./application/modules/transaction/transaction.module"
+import { MenusModule } from "./application/modules/menu/menu.module"
+import { CategoriesModule } from "./application/modules/category/category.module"
+import { AdminModule } from "./application/modules/admin/admin.module"
 
 @Module({
   imports: [
@@ -35,7 +38,10 @@ import { TransactionModule } from "./application/modules/transaction/transaction
     AuthModule,
     UserProfileModule,
     WalletModule,
-    TransactionModule
+    TransactionModule,
+    MenusModule,
+    CategoriesModule,
+    AdminModule
   ],
   controllers: [],
   providers: []

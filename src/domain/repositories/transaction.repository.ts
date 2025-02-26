@@ -1,10 +1,10 @@
 import type { Reference } from "@mikro-orm/core"
-import type Transaction from "../entities/transaction.entity"
-import type TransactionType from "../enums/transaction-type.enum"
-import type TransactionStatus from "../enums/transaction-status.enum"
-import type TransactionFailureReason from "../enums/transaction-failure-reason.enum"
 import type Booking from "../entities/booking.entity"
+import type Transaction from "../entities/transaction.entity"
 import type User from "../entities/user.entity"
+import type TransactionFailureReason from "../enums/transaction-failure-reason.enum"
+import type TransactionStatus from "../enums/transaction-status.enum"
+import type TransactionType from "../enums/transaction-type.enum"
 
 abstract class TransactionRepository {
   abstract persistAndFlush(
@@ -18,7 +18,7 @@ abstract class TransactionRepository {
     failureReason?: TransactionFailureReason,
     booking?: Booking,
     notes?: string
-  ): Promise<Transaction>
+  ): Transaction
   abstract findUserTransaction(
     userId: string,
     filters: Partial<{

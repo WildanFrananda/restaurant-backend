@@ -1,5 +1,6 @@
-import type { EntityData } from "@mikro-orm/core"
+/* eslint-disable indent */
 import { faker } from "@faker-js/faker"
+import type { EntityData } from "@mikro-orm/core"
 import { Factory } from "@mikro-orm/seeder"
 import Transaction from "../../../../domain/entities/transaction.entity"
 import TransactionFailureReason from "../../../../domain/enums/transaction-failure-reason.enum"

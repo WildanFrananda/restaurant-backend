@@ -1,6 +1,3 @@
-import type WalletUpdateEvent from "src/infrastructure/messaging/websocket/event/wallet/wallet-update.event"
-import type WalletEvent from "src/infrastructure/messaging/websocket/event/wallet/wallet.event"
-import type WebSocketClient from "src/infrastructure/messaging/websocket/websocket-client"
 import { Injectable } from "@nestjs/common"
 import { SubscribeMessage, WebSocketGateway } from "@nestjs/websockets"
 import { Request } from "express"
@@ -13,6 +10,9 @@ import WsAuthMiddleware from "src/common/middlewares/websocket/ws-auth.middlewar
 import WsRateLimiterMiddleware from "src/common/middlewares/websocket/ws-rate-limit.middleware"
 import TransactionType from "src/domain/enums/transaction-type.enum"
 import BaseWebSocketGateway from "src/infrastructure/messaging/websocket/base.gateway"
+import type WalletUpdateEvent from "src/infrastructure/messaging/websocket/event/wallet/wallet-update.event"
+import type WalletEvent from "src/infrastructure/messaging/websocket/event/wallet/wallet.event"
+import type WebSocketClient from "src/infrastructure/messaging/websocket/websocket-client"
 
 @Injectable()
 @WebSocketGateway(3080, {
@@ -42,8 +42,8 @@ class WalletGateway extends BaseWebSocketGateway<WalletEvent> {
     this.logger.log("WalletGateway initialized")
   }
 
-  public override async handleConnection(client: WebSocketClient, request: Request): Promise<void> {
-    await super.handleConnection(client, request)
+  public override handleConnection(client: WebSocketClient, request: Request): void {
+    super.handleConnection(client, request)
 
     const userData = client.data.get("user") as { id: string }
 
@@ -85,17 +85,17 @@ class WalletGateway extends BaseWebSocketGateway<WalletEvent> {
         break
       default:
         this.emit(client, "error", {
-          message: `Unknown event type: ${event.type}`,
+          message: `Unknown event type: ${event.type as string}`,
           code: 400
         })
     }
   }
 
-  protected override async handleBinaryMessage(
+  protected override handleBinaryMessage(
     client: WebSocketClient,
     type: string,
     data: Buffer
-  ): Promise<void> {
+  ): void {
     this.emit(client, "error", {
       message: "Binary messages are not supported for wallet updates",
       code: 400

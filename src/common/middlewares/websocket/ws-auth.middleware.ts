@@ -6,10 +6,10 @@ import WebSocketClient from "src/infrastructure/messaging/websocket/websocket-cl
 class WsAuthMiddleware {
   constructor(private readonly jwtService: JwtService) {}
 
-  public async authenticate(client: WebSocketClient, token: string): Promise<boolean> {
+  public authenticate(client: WebSocketClient, token: string): boolean {
     try {
-      const decoded = this.jwtService.verify(token)
-      const userId = decoded.id || decoded.sub
+      const decoded = this.jwtService.verify<{ id?: string; sub?: string }>(token)
+      const userId = decoded.id ?? decoded.sub
 
       if (!userId) {
         throw new UnauthorizedException("Token payload does not contain user identifier")
@@ -19,7 +19,7 @@ class WsAuthMiddleware {
 
       return true
     } catch (error: unknown) {
-      throw new UnauthorizedException(`Invalid token ${error}`)
+      throw new UnauthorizedException(`Invalid token ${String(error)}`)
     }
   }
 }

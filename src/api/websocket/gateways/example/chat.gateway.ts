@@ -2,9 +2,8 @@
 import { WebSocketGateway } from "@nestjs/websockets"
 import BaseWebSocketGateway from "src/infrastructure/messaging/websocket/base.gateway"
 import ChatEvent from "src/infrastructure/messaging/websocket/event/chat/chat.event"
-import ChatMessageEvent from "src/infrastructure/messaging/websocket/event/chat/message.event"
 import WebSocketClient from "src/infrastructure/messaging/websocket/websocket-client"
-import { v4 as uuidv4 } from "uuid"
+import { v4 } from "uuid"
 
 interface FileMetadata {
   filename: string
@@ -17,21 +16,19 @@ interface FileMetadata {
   path: "/ws/chat"
 })
 export class ChatGateway extends BaseWebSocketGateway<ChatEvent> {
-  protected async handleMessage(client: WebSocketClient, event: ChatEvent): Promise<void> {
+  protected handleMessage(client: WebSocketClient, event: ChatEvent): void {
     try {
       switch (event.type) {
         case "join":
-          await this.handleJoinRoom(client, event.data.room)
+          this.handleJoinRoom(client, event.data.room)
           break
 
         case "leave":
-          await this.handleLeaveRoom(client, event.data.room)
+          this.handleLeaveRoom(client, event.data.room)
           break
 
         case "message":
-          const messageEvent = event as ChatMessageEvent
-
-          await this.handleChatMessage(client, messageEvent.data)
+          this.handleChatMessage(client, event.data)
           break
 
         case "error":
@@ -41,15 +38,19 @@ export class ChatGateway extends BaseWebSocketGateway<ChatEvent> {
         default:
           throw new Error(`Unknown event type`)
       }
-    } catch (error) {
+    } catch (error: unknown) {
       this.emit(client, "error", {
-        message: error.message,
+        message: error,
         code: 500
       })
     }
   }
 
-  protected async handleBinaryMessage(client: WebSocketClient, type: string, data: Buffer): Promise<void> {
+  protected handleBinaryMessage(
+    client: WebSocketClient,
+    type: string,
+    data: Buffer
+  ): void {
     try {
       // First 8 bytes contain metadata length
       const metadataLength = data.readUInt32BE(0)
@@ -60,7 +61,7 @@ export class ChatGateway extends BaseWebSocketGateway<ChatEvent> {
       const fileData = data.slice(4 + metadataLength)
 
       // Store file data (implement your storage logic)
-      const fileId = await this.handleFileUpload(metadata, fileData)
+      const fileId = this.handleFileUpload(metadata, fileData)
 
       // Notify client of successful upload
       this.emit(client, "fileUploaded", {
@@ -80,16 +81,16 @@ export class ChatGateway extends BaseWebSocketGateway<ChatEvent> {
           uploadedBy: client.id
         })
       }
-    } catch (error) {
+    } catch (error: unknown) {
       this.emit(client, "error", {
-        message: `File processing failed: ${error.message}`,
+        message: `File processing failed: ${String(error)}`,
         code: 500
       })
     }
   }
 
-  private async handleJoinRoom(client: WebSocketClient, room: string): Promise<void> {
-    await this.roomHandler.join(client, room)
+  private handleJoinRoom(client: WebSocketClient, room: string): void {
+    this.roomHandler.join(client, room)
     this.emit(client, "joined", { room })
     this.to(room).emit("userJoined", {
       userId: client.id,
@@ -97,8 +98,8 @@ export class ChatGateway extends BaseWebSocketGateway<ChatEvent> {
     })
   }
 
-  private async handleLeaveRoom(client: WebSocketClient, room: string): Promise<void> {
-    await this.roomHandler.leave(client, room)
+  private handleLeaveRoom(client: WebSocketClient, room: string): void {
+    this.roomHandler.leave(client, room)
     this.emit(client, "left", { room })
     this.to(room).emit("userLeft", {
       userId: client.id,
@@ -106,12 +107,12 @@ export class ChatGateway extends BaseWebSocketGateway<ChatEvent> {
     })
   }
 
-  private async handleChatMessage(
+  private handleChatMessage(
     client: WebSocketClient,
     data: { content: string; room?: string }
-  ): Promise<void> {
+  ): void {
     const messageData = {
-      id: uuidv4(),
+      id: v4(),
       content: data.content,
       userId: client.id,
       timestamp: new Date().toISOString()
@@ -124,9 +125,9 @@ export class ChatGateway extends BaseWebSocketGateway<ChatEvent> {
     }
   }
 
-  private async handleFileUpload(metadata: FileMetadata, data: Buffer): Promise<string> {
+  private handleFileUpload(metadata: FileMetadata, data: Buffer): string {
     // Implement your file storage logic here
     // This is a simple example that generates a file ID
-    return `file_${uuidv4()}`
+    return `file_${v4()}`
   }
 }

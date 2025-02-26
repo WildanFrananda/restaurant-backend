@@ -1,13 +1,13 @@
 import type { FilterQuery, Reference } from "@mikro-orm/core"
-import type User from "src/domain/entities/user.entity"
-import type Booking from "src/domain/entities/booking.entity"
-import type TransactionType from "src/domain/enums/transaction-type.enum"
-import type TransactionFailureReason from "src/domain/enums/transaction-failure-reason.enum"
-import type TransactionStatus from "src/domain/enums/transaction-status.enum"
 import { InjectRepository } from "@mikro-orm/nestjs"
 import { EntityManager, EntityRepository } from "@mikro-orm/postgresql"
 import { Inject, Injectable } from "@nestjs/common"
+import type Booking from "src/domain/entities/booking.entity"
 import Transaction from "src/domain/entities/transaction.entity"
+import type User from "src/domain/entities/user.entity"
+import type TransactionFailureReason from "src/domain/enums/transaction-failure-reason.enum"
+import type TransactionStatus from "src/domain/enums/transaction-status.enum"
+import type TransactionType from "src/domain/enums/transaction-type.enum"
 import TransactionRepository from "src/domain/repositories/transaction.repository"
 
 @Injectable()
@@ -28,7 +28,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     await this.em.flush()
   }
 
-  public override async createTransaction(
+  public override createTransaction(
     user: User,
     amount: number,
     type: TransactionType,
@@ -36,7 +36,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     failureReason?: TransactionFailureReason,
     booking?: Booking,
     notes?: string
-  ): Promise<Transaction> {
+  ): Transaction {
     const transaction = this.transactionRepository.create({
       user,
       amount,

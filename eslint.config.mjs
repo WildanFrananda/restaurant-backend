@@ -1,6 +1,5 @@
 // @ts-check
 import eslint from "@eslint/js"
-import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended"
 import globals from "globals"
 import tseslint from "typescript-eslint"
 
@@ -29,7 +28,7 @@ export default tseslint.config(
       // Google style base rules
       "max-len": ["error", { code: 120, tabWidth: 2 }],
       "no-tabs": "error",
-      indent: ["error", 2, { ignoredNodes: ["PropertyDefinition[decorators]"], switchCase: 2 }],
+      indent: ["error", 2, { ignoredNodes: ["PropertyDefinition[decorators]"], "SwitchCase": 1 }],
       "no-mixed-spaces-and-tabs": "error",
       "no-trailing-spaces": "error",
       "linebreak-style": ["error", "unix"],
@@ -61,17 +60,17 @@ export default tseslint.config(
       "@typescript-eslint/no-unsafe-call": "off",
 
       //Prettier 
-      "prettier/prettier": [
-        "error",
-        {
-          semi: false,
-          singleQuote: false,
-          trailingComma: "none",
-          arrowParens: "always",
-          printWidth: 100,
-          bracketSameLine: false
-        }
-      ]
+      // "prettier/prettier": [
+      //   "error",
+      //   {
+      //     semi: false,
+      //     singleQuote: false,
+      //     trailingComma: "none",
+      //     arrowParens: "always",
+      //     printWidth: 100,
+      //     bracketSameLine: false
+      //   }
+      // ]
     }
   },
   {

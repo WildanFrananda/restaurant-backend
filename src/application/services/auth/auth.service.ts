@@ -60,7 +60,12 @@ class AuthService {
   }
 
   public async login(user: Partial<User>): LoginType {
-    const payload = { email: user.email, sub: user.id, roles: user.role, type: "emailVerification" }
+    const payload = {
+      email: user.email,
+      sub: user.id,
+      roles: Array.isArray(user.role) ? user.role : [user.role],
+      type: "emailVerification"
+    }
 
     return {
       id: user.id,

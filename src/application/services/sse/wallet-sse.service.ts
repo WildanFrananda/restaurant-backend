@@ -1,6 +1,6 @@
-import type WalletEvent from "src/infrastructure/messaging/websocket/event/wallet/wallet.event"
 import { Injectable } from "@nestjs/common"
 import BaseSSE from "src/infrastructure/messaging/sse/base.sse"
+import type WalletEvent from "src/infrastructure/messaging/websocket/event/wallet/wallet.event"
 
 @Injectable()
 class WalletSSEService extends BaseSSE<WalletEvent> {
@@ -23,7 +23,7 @@ class WalletSSEService extends BaseSSE<WalletEvent> {
     return JSON.stringify(event.data)
   }
 
-  public async notifyWalletUpdate(walletUpdate: Omit<WalletEvent, "type">): Promise<void> {
+  public notifyWalletUpdate(walletUpdate: Omit<WalletEvent, "type">): void {
     const event: WalletEvent = {
       type: "walletUpdated",
       ...walletUpdate,

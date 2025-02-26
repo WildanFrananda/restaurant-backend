@@ -1,4 +1,4 @@
-import { Reference } from "@mikro-orm/core"
+import { AnyEntity, Reference } from "@mikro-orm/core"
 import { InjectRepository } from "@mikro-orm/nestjs"
 import { EntityManager, EntityRepository } from "@mikro-orm/postgresql"
 import { Inject, Injectable } from "@nestjs/common"
@@ -21,6 +21,20 @@ class CategoryRepositoryImpl extends CategoryRepository {
   ): Promise<void> {
     this.em.persist(data)
     await this.em.flush()
+  }
+
+  public override async removeAndFlush(
+    data: AnyEntity | Reference<AnyEntity> | Iterable<AnyEntity | Reference<AnyEntity>>
+  ): Promise<void> {
+    await this.em.removeAndFlush(data)
+  }
+
+  public override createCategory(name: string, description: string, imageUrl: string): Category {
+    return this.categoryRepository.create({ name, description, imageUrl })
+  }
+
+  public override async findCategoryById(id: string): Promise<Category | null> {
+    return await this.categoryRepository.findOne({ id })
   }
 
   public override async findAllCategories(): Promise<Category[]> {
