@@ -1,17 +1,18 @@
 import { InjectRepository } from "@mikro-orm/nestjs"
 import {
-  Reference,
+  AnyEntity,
   EntityManager,
   EntityRepository,
   Loaded,
-  AnyEntity
+  Reference
 } from "@mikro-orm/postgresql"
-import { Inject } from "@nestjs/common"
+import { Inject, Injectable } from "@nestjs/common"
 import Category from "src/domain/entities/category.entity"
 import Menu from "src/domain/entities/menu.entity"
 import MenuStatus from "src/domain/enums/menu-status.enum"
 import MenuRepository from "src/domain/repositories/menu.repository"
 
+@Injectable()
 class MenuRepositoryImpl extends MenuRepository {
   constructor(
     @InjectRepository(Menu)

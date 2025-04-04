@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   nginx:
     image: mirror.gcr.io/library/nginx:alpine

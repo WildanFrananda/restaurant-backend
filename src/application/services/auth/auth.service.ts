@@ -1,9 +1,10 @@
-import type User from "src/domain/entities/user.entity"
-import { JwtService } from "@nestjs/jwt"
 import { ConflictException, Injectable, UnauthorizedException } from "@nestjs/common"
-import UserRepository from "src/domain/repositories/user.repository"
+import { JwtService } from "@nestjs/jwt"
 import * as bcrypt from "bcrypt"
+import type { Profile } from "passport-google-oauth20"
+import type User from "src/domain/entities/user.entity"
 import UserRole from "src/domain/enums/user-role.enum"
+import UserRepository from "src/domain/repositories/user.repository"
 
 type LoginType = Promise<{
   id: string | undefined
@@ -114,6 +115,19 @@ class AuthService {
     } catch (error) {
       throw new UnauthorizedException(error)
     }
+  }
+
+  public async findOrCreateGoogleUser(profile: Profile, accessToken: string, refreshToken: string): Promise<User> {
+    const { emails, id, displayName } = profile
+    const email = emails && emails.length > 0 ? emails[0].value : ""
+
+    let user = await this.userRepository.findGoogleUser(id, email)
+
+    if (!user) {
+      user = await this.userRepository.createUser(displayName, email, "", true, UserRole.USER, id)
+    }
+
+    return user
   }
 }
 

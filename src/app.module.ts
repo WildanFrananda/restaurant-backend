@@ -12,6 +12,8 @@ import { TransactionModule } from "./application/modules/transaction/transaction
 import { MenusModule } from "./application/modules/menu/menu.module"
 import { CategoriesModule } from "./application/modules/category/category.module"
 import { AdminModule } from "./application/modules/admin/admin.module"
+import { BookingModule } from "./application/modules/booking/booking.module"
+import { TableModule } from "./application/modules/table/table.module"
 
 @Module({
   imports: [
@@ -41,6 +43,8 @@ import { AdminModule } from "./application/modules/admin/admin.module"
     TransactionModule,
     MenusModule,
     CategoriesModule,
+    BookingModule,
+    TableModule,
     AdminModule
   ],
   controllers: [],

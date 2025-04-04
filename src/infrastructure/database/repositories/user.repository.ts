@@ -1,9 +1,9 @@
 import type { Reference } from "@mikro-orm/core"
-import { EntityManager, EntityRepository } from "@mikro-orm/postgresql"
 import { InjectRepository } from "@mikro-orm/nestjs"
+import { EntityManager, EntityRepository } from "@mikro-orm/postgresql"
 import { Inject, Injectable } from "@nestjs/common"
-import User from "src/domain/entities/user.entity"
 import UserProfile from "src/domain/entities/user-profile.entity"
+import User from "src/domain/entities/user.entity"
 import UserRole from "src/domain/enums/user-role.enum"
 import UserRepository from "src/domain/repositories/user.repository"
 
@@ -40,12 +40,14 @@ class UserRepositoryImpl extends UserRepository {
     email: string,
     password: string,
     isVerified: boolean,
-    role: UserRole
+    role: UserRole,
+    googleId?: string
   ): Promise<User> {
     const user = this.userRepository.create({
       email,
       password,
       isVerified,
+      googleId,
       role,
       createdAt: new Date()
     })
@@ -75,6 +77,15 @@ class UserRepositoryImpl extends UserRepository {
 
   public override async findUserProfileByUserId(userId: string): Promise<UserProfile | null> {
     return await this.profileRepository.findOne({ userId })
+  }
+
+  public override async findGoogleUser(id: string, email: string): Promise<User | null> {
+    return await this.userRepository.findOne({
+      $or: [
+        { googleId: id },
+        { email: email }
+      ]
+    })
   }
 }
 
