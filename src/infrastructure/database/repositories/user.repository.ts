@@ -87,6 +87,10 @@ class UserRepositoryImpl extends UserRepository {
       ]
     })
   }
+
+  public override reference(id: string): User {
+    return this.userRepository.getEntityManager().getReference(User, id)
+  }
 }
 
 export default UserRepositoryImpl

@@ -4,15 +4,15 @@ import type User from "../entities/user.entity"
 import type UserRole from "../enums/user-role.enum"
 
 abstract class UserRepository {
-  abstract persistAndFlush(
+  public abstract persistAndFlush(
     data: object | Reference<object> | Iterable<object | Reference<object>>
   ): Promise<void>
-  abstract findUserId(id: string): Promise<User | null>
-  abstract findUserEmail(email: string): Promise<User | null>
-  abstract findUserWithProfile(userId: string): Promise<User | null>
-  abstract findUserProfileByUserId(userId: string): Promise<UserProfile | null>
-  abstract findGoogleUser(id: string, email: string): Promise<User | null>
-  abstract createUser(
+  public abstract findUserId(id: string): Promise<User | null>
+  public abstract findUserEmail(email: string): Promise<User | null>
+  public abstract findUserWithProfile(userId: string): Promise<User | null>
+  public abstract findUserProfileByUserId(userId: string): Promise<UserProfile | null>
+  public abstract findGoogleUser(id: string, email: string): Promise<User | null>
+  public abstract createUser(
     name: string,
     email: string,
     password: string,
@@ -20,6 +20,7 @@ abstract class UserRepository {
     role: UserRole,
     googleId?: string
   ): Promise<User>
+  public abstract reference(id: string): User
 }
 
 export default UserRepository

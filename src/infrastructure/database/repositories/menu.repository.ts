@@ -2,6 +2,7 @@ import { InjectRepository } from "@mikro-orm/nestjs"
 import {
   AnyEntity,
   EntityManager,
+  EntityName,
   EntityRepository,
   Loaded,
   Reference
@@ -90,6 +91,10 @@ class MenuRepositoryImpl extends MenuRepository {
       populate: ["category"],
       orderBy: { name: "ASC" }
     })
+  }
+
+  public override reference(id: string): Menu {
+    return this.menuRepository.getEntityManager().getReference(Menu, id)
   }
 }
 

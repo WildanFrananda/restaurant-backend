@@ -1,4 +1,4 @@
-import type { Reference } from "@mikro-orm/core"
+import type { EntityName, Reference } from "@mikro-orm/core"
 import type Booking from "../entities/booking.entity"
 import type Transaction from "../entities/transaction.entity"
 import type User from "../entities/user.entity"
@@ -30,6 +30,7 @@ abstract class TransactionRepository {
     page: number,
     limit: number
   ): Promise<[Transaction[], number]>
+  public abstract reference(id: string): Transaction
 }
 
 export default TransactionRepository

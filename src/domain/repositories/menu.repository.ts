@@ -1,4 +1,4 @@
-import type { AnyEntity, Loaded, Reference } from "@mikro-orm/postgresql"
+import type { AnyEntity, EntityName, Loaded, Reference } from "@mikro-orm/postgresql"
 import type Menu from "../entities/menu.entity"
 import MenuStatus from "../enums/menu-status.enum"
 import Category from "../entities/category.entity"
@@ -31,6 +31,7 @@ abstract class MenuRepository {
   public abstract menuFilter(
     conditions: Record<string, unknown>
   ): Promise<Loaded<Menu, "category", "*", never>[]>
+  public abstract reference(id: string): Menu
 }
 
 export default MenuRepository

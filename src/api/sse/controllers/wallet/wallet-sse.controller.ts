@@ -4,8 +4,8 @@ import type { MessageEvent } from "@nestjs/common"
 import type JwtType from "src/common/types/jwt.type"
 import { randomUUID } from "crypto"
 import { Controller, ForbiddenException, Req, Sse } from "@nestjs/common"
-import AdminWalletSSEService from "src/application/services/sse/admin-wallet-sse.service"
-import WalletSSEService from "src/application/services/sse/wallet-sse.service"
+import AdminWalletSSEService from "src/application/services/sse/wallet/admin-wallet-sse.service"
+import WalletSSEService from "src/application/services/sse/wallet/wallet-sse.service"
 
 @Controller("sse")
 class WalletSSEController {

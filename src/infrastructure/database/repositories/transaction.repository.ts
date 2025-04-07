@@ -1,4 +1,4 @@
-import type { FilterQuery, Reference } from "@mikro-orm/core"
+import type { EntityName, FilterQuery, Reference } from "@mikro-orm/core"
 import { InjectRepository } from "@mikro-orm/nestjs"
 import { EntityManager, EntityRepository } from "@mikro-orm/postgresql"
 import { Inject, Injectable } from "@nestjs/common"
@@ -97,6 +97,10 @@ class TransactionRepositoryImpl extends TransactionRepository {
     )
 
     return [transactions, total]
+  }
+
+  public override reference(id: string): Transaction {
+    return this.transactionRepository.getEntityManager().getReference(Transaction, id)
   }
 }
 

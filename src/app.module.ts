@@ -14,6 +14,8 @@ import { CategoriesModule } from "./application/modules/category/category.module
 import { AdminModule } from "./application/modules/admin/admin.module"
 import { BookingModule } from "./application/modules/booking/booking.module"
 import { TableModule } from "./application/modules/table/table.module"
+import { ReviewModule } from "./application/modules/review/review.module"
+import { EventModule } from "./application/modules/event/event.module"
 
 @Module({
   imports: [
@@ -45,6 +47,8 @@ import { TableModule } from "./application/modules/table/table.module"
     CategoriesModule,
     BookingModule,
     TableModule,
+    ReviewModule,
+    EventModule,
     AdminModule
   ],
   controllers: [],

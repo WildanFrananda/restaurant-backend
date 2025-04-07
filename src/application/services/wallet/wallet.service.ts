@@ -10,8 +10,8 @@ import BookingRepository from "src/domain/repositories/booking.repository"
 import TransactionRepository from "src/domain/repositories/transaction.repository"
 import UserRepository from "src/domain/repositories/user.repository"
 import WalletUpdateEvent from "src/infrastructure/messaging/websocket/event/wallet/wallet-update.event"
-import AdminWalletSSEService from "../sse/admin-wallet-sse.service"
-import WalletSSEService from "../sse/wallet-sse.service"
+import AdminWalletSSEService from "../sse/wallet/admin-wallet-sse.service"
+import WalletSSEService from "../sse/wallet/wallet-sse.service"
 
 @Injectable()
 class WalletService {
@@ -82,7 +82,7 @@ class WalletService {
       throw new NotFoundException("User not found")
     }
 
-    const booking = await this.bookingRepository.findBookingId(bookingId)
+    const booking = await this.bookingRepository.filterBookingById(bookingId)
 
     if (!booking) {
       throw new NotFoundException("Booking not found")
