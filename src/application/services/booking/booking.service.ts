@@ -1,8 +1,11 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common"
-import CreateBookingDTO from "src/application/dtos/booking/create-booking.dto"
+import type ChefGateway from "src/api/websocket/gateways/chef/chef.gateway"
+import type CreateBookingDTO from "src/application/dtos/booking/create-booking.dto"
 import Booking from "src/domain/entities/booking.entity"
 import BookingStatus from "src/domain/enums/booking-status.enum"
 import BookingType from "src/domain/enums/booking-type.enum"
+import ChefLocation from "src/domain/enums/chef-location.enum"
+import ChefStatus from "src/domain/enums/chef-status.enum"
 import BookingRepository from "src/domain/repositories/booking.repository"
 import MenuRepository from "src/domain/repositories/menu.repository"
 import TableRepository from "src/domain/repositories/table.repository"
@@ -10,6 +13,7 @@ import TableRepository from "src/domain/repositories/table.repository"
 @Injectable()
 class BookingService {
   constructor(
+    private readonly chefGateway: ChefGateway,
     private readonly bookingRepository: BookingRepository,
     private readonly tableRepository: TableRepository,
     private readonly menuRepository: MenuRepository
@@ -41,7 +45,7 @@ class BookingService {
 
       return booking
     } else if (type === BookingType.HOME_DINE_IN) {
-      if (!menuId || location) {
+      if (!menuId || !location) {
         throw new BadRequestException("menuId and location are required for home dine in bookings")
       }
 
@@ -77,6 +81,11 @@ class BookingService {
     }
 
     return booking
+  }
+
+  public orderCompleted(bookingId: string, chefId: string): void {
+    this.chefGateway.updateChefStatus(chefId, ChefStatus.AVAILABLE)
+    this.chefGateway.updateChefLocation(chefId, bookingId, ChefLocation.COMPLETED)
   }
 }
 

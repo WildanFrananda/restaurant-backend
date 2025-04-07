@@ -5,10 +5,13 @@ import type UpdateBookingStatusDTO from "src/application/dtos/booking/update-boo
 import { Injectable, NotFoundException } from "@nestjs/common"
 import AssignChefDTO from "src/application/dtos/chef/assign-chef.dto"
 import ChefRepository from "src/domain/repositories/chef.repository"
+import ChefGateway from "src/api/websocket/gateways/chef/chef.gateway"
+import ChefStatus from "src/domain/enums/chef-status.enum"
 
 @Injectable()
 class AdminBookingService {
   constructor(
+    private readonly chefGateway: ChefGateway,
     private readonly bookingRepository: BookingRepository,
     private readonly chefRepository: ChefRepository
   ) {}
@@ -62,6 +65,8 @@ class AdminBookingService {
     }
 
     booking.chef = chef
+
+    this.chefGateway.updateChefStatus(chefId, ChefStatus.BOOKED)
 
     await this.bookingRepository.persistAndFlush(booking)
 
