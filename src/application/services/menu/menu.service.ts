@@ -1,7 +1,7 @@
-import { Injectable, Inject, Logger, NotFoundException } from "@nestjs/common"
-import { Cache } from "cache-manager"
-import Menu from "src/domain/entities/menu.entity"
-import GetMenusDto from "src/application/dtos/menu/get-menu.dto"
+import type Menu from "src/domain/entities/menu.entity"
+import type GetMenusDto from "src/application/dtos/menu/get-menu.dto"
+import { Injectable, Logger, NotFoundException } from "@nestjs/common"
+import CacheService from "src/infrastructure/cache/cache.service"
 import MenuRepository from "src/domain/repositories/menu.repository"
 
 @Injectable()
@@ -10,7 +10,7 @@ class MenusService {
 
   constructor(
     private readonly menuRepository: MenuRepository,
-    @Inject("CACHE_MANAGER") private readonly cacheManager: Cache
+    private readonly cacheManager: CacheService
   ) {}
 
   public async getMenus(
@@ -23,6 +23,7 @@ class MenusService {
 
     if (cached) {
       this.logger.log(`Returning cached menus for key: ${cacheKey}`)
+
       return { ...cached, page, limit }
     }
 

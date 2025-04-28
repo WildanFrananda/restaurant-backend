@@ -5,6 +5,7 @@ import ReviewService from "src/application/services/review/review.service"
 import Menu from "src/domain/entities/menu.entity"
 import Review from "src/domain/entities/review.entity"
 import Transaction from "src/domain/entities/transaction.entity"
+import UserProfile from "src/domain/entities/user-profile.entity"
 import User from "src/domain/entities/user.entity"
 import MenuRepository from "src/domain/repositories/menu.repository"
 import ReviewRepository from "src/domain/repositories/review.repository"
@@ -16,7 +17,7 @@ import TransactionRepositoryImpl from "src/infrastructure/database/repositories/
 import UserRepositoryImpl from "src/infrastructure/database/repositories/user.repository"
 
 @Module({
-  imports: [MikroOrmModule.forFeature([Review, User, Menu, Transaction])],
+  imports: [MikroOrmModule.forFeature([Review, User, UserProfile, Menu, Transaction])],
   providers: [
     {
       provide: ReviewRepository,
