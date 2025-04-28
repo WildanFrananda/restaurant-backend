@@ -16,6 +16,7 @@ import { BookingModule } from "./application/modules/booking/booking.module"
 import { TableModule } from "./application/modules/table/table.module"
 import { ReviewModule } from "./application/modules/review/review.module"
 import { EventModule } from "./application/modules/event/event.module"
+import { ThrottlerModule } from "@nestjs/throttler"
 
 @Module({
   imports: [
@@ -39,6 +40,11 @@ import { EventModule } from "./application/modules/event/event.module"
       port: parseInt(process.env.REDIS_PORT || "6379"),
       ttl: 60 * 5 // 5 minutes cache time
     }),
+    ThrottlerModule.forRoot([{
+      name: "default",
+      limit: 100,
+      ttl: 60
+    }]),
     AuthModule,
     UserProfileModule,
     WalletModule,
