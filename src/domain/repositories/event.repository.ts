@@ -1,5 +1,5 @@
 import { AnyEntity, Reference } from "@mikro-orm/postgresql"
-import Event from "../entities/event.entity"
+import AppEvent from "../entities/event.entity"
 
 abstract class EventRepository {
   public abstract persistAndFlush(
@@ -13,8 +13,8 @@ abstract class EventRepository {
     description: string,
     isPopup: boolean,
     imageUrl?: string
-  ): Event
-  public abstract findOneEvent(id: string): Promise<Event | null>
+  ): AppEvent
+  public abstract findOneEvent(id: string): Promise<AppEvent | null>
 }
 
 export default EventRepository

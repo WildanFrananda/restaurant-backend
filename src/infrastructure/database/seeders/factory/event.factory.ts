@@ -1,12 +1,12 @@
 import type { EntityData } from "@mikro-orm/core"
 import { faker } from "@faker-js/faker"
 import { Factory } from "@mikro-orm/seeder"
-import Event from "../../../../domain/entities/event.entity"
+import AppEvent from "../../../../domain/entities/event.entity"
 
-class EventFactory extends Factory<Event> {
-  model = Event
+class EventFactory extends Factory<AppEvent> {
+  model = AppEvent
 
-  protected override definition(): EntityData<Event> {
+  protected override definition(): EntityData<AppEvent> {
     const isPopup = faker.datatype.boolean()
 
     return {

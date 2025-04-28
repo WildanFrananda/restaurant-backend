@@ -3,7 +3,7 @@ import CreateEventDTO from "src/application/dtos/event/create-event.dto"
 import UpdateEventDTO from "src/application/dtos/event/update-event.dto"
 import EventService from "src/application/services/event/event.service"
 import Admin from "src/common/decorators/admin.decorator"
-import Event from "src/domain/entities/event.entity"
+import AppEvent from "src/domain/entities/event.entity"
 
 @Admin()
 @Controller("admin/event")
@@ -11,12 +11,12 @@ class AdminEventController {
   constructor(private readonly eventService: EventService) {}
 
   @Post()
-  public async createEvent(@Body() dto: CreateEventDTO): Promise<Event> {
+  public async createEvent(@Body() dto: CreateEventDTO): Promise<AppEvent> {
     return await this.eventService.createEvent(dto)
   }
 
   @Put(":id")
-  public async updateEvent(@Param("id") id: string, @Body() dto: UpdateEventDTO): Promise<Event> {
+  public async updateEvent(@Param("id") id: string, @Body() dto: UpdateEventDTO): Promise<AppEvent> {
     return await this.eventService.updateEvent(id, dto)
   }
 
@@ -24,7 +24,7 @@ class AdminEventController {
   public async deleteEvent(@Param("id") id: string): Promise<{ message: string }> {
     await this.eventService.deleteEvent(id)
 
-    return { message: "Event deleted successfully" }
+    return { message: "AppEvent deleted successfully" }
   }
 }
 

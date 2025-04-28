@@ -2,7 +2,7 @@ import { Entity, PrimaryKey, Property } from "@mikro-orm/core"
 import { v4 } from "uuid"
 
 @Entity()
-class Event {
+class AppEvent {
   @PrimaryKey({ type: "uuid" })
   id: string = v4()
 
@@ -19,4 +19,4 @@ class Event {
   imageUrl?: string
 }
 
-export default Event
+export default AppEvent

@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common"
 import EventRepository from "src/domain/repositories/event.repository"
 import EventSSEService from "../sse/event/event-sse.service"
 import CreateEventDTO from "src/application/dtos/event/create-event.dto"
-import Event from "src/domain/entities/event.entity"
+import AppEvent from "src/domain/entities/event.entity"
 import UpdateEventDTO from "src/application/dtos/event/update-event.dto"
 
 @Injectable()
@@ -12,7 +12,7 @@ class EventService {
     private readonly eventSseService: EventSSEService
   ) {}
 
-  public async createEvent(dto: CreateEventDTO): Promise<Event> {
+  public async createEvent(dto: CreateEventDTO): Promise<AppEvent> {
     const { name, description, isPopup, imageUrl } = dto
     const event = this.eventRepository.createEvent(name, description, isPopup, imageUrl)
 
@@ -31,11 +31,11 @@ class EventService {
     return event
   }
 
-  public async updateEvent(id: string, dto: UpdateEventDTO): Promise<Event> {
+  public async updateEvent(id: string, dto: UpdateEventDTO): Promise<AppEvent> {
     const event = await this.eventRepository.findOneEvent(id)
 
     if (!event) {
-      throw new NotFoundException("Event not found")
+      throw new NotFoundException("AppEvent not found")
     }
 
     if (dto.name !== undefined) {
@@ -73,7 +73,7 @@ class EventService {
     const event = await this.eventRepository.findOneEvent(id)
 
     if (!event) {
-      throw new NotFoundException("Event not found")
+      throw new NotFoundException("AppEvent not found")
     }
 
     await this.eventRepository.removeAndFlush(event)

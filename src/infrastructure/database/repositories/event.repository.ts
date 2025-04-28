@@ -2,14 +2,14 @@ import { AnyEntity, EntityRepository, Reference } from "@mikro-orm/core"
 import { InjectRepository } from "@mikro-orm/nestjs"
 import { EntityManager } from "@mikro-orm/postgresql"
 import { Inject, Injectable } from "@nestjs/common"
-import Event from "src/domain/entities/event.entity"
+import AppEvent from "src/domain/entities/event.entity"
 import EventRepository from "src/domain/repositories/event.repository"
 
 @Injectable()
 class EventRepositoryImpl extends EventRepository {
   constructor(
-    @InjectRepository(Event)
-    private readonly eventRepository: EntityRepository<Event>,
+    @InjectRepository(AppEvent)
+    private readonly eventRepository: EntityRepository<AppEvent>,
     @Inject(EntityManager)
     private readonly em: EntityManager
   ) {
@@ -34,7 +34,7 @@ class EventRepositoryImpl extends EventRepository {
     description: string,
     isPopup: boolean,
     imageUrl?: string
-  ): Event {
+  ): AppEvent {
     return this.eventRepository.create({
       name,
       description,
@@ -43,7 +43,7 @@ class EventRepositoryImpl extends EventRepository {
     })
   }
 
-  public override async findOneEvent(id: string): Promise<Event | null> {
+  public override async findOneEvent(id: string): Promise<AppEvent | null> {
     return await this.eventRepository.findOne({ id })
   }
 }

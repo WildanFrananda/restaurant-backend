@@ -1,5 +1,6 @@
 import { MikroOrmModule } from "@mikro-orm/nestjs"
 import { Module } from "@nestjs/common"
+import { JwtModule } from "@nestjs/jwt"
 import AdminBookingController from "src/api/http/controllers/admin/booking/admin-booking.controller"
 import AdminCategoryController from "src/api/http/controllers/admin/menu/admin-category.controller"
 import AdminMenuController from "src/api/http/controllers/admin/menu/admin-menu.controller"
@@ -34,7 +35,13 @@ import MenuRepositoryImpl from "src/infrastructure/database/repositories/menu.re
 import TableRepositoryImpl from "src/infrastructure/database/repositories/table.repository"
 
 @Module({
-  imports: [MikroOrmModule.forFeature([Chef, Menu, Category, Booking, Table])],
+  imports: [
+    MikroOrmModule.forFeature([Chef, Menu, Category, Booking, Table]),
+    JwtModule.register({
+      secret: process.env.JWT_SECRET || "SECRET",
+      signOptions: { expiresIn: "1h" }
+    })
+  ],
   providers: [
     {
       provide: ChefRepository,

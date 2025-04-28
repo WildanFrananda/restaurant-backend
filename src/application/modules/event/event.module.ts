@@ -4,11 +4,12 @@ import AdminEventController from "src/api/http/controllers/admin/event/admin-eve
 import EventSSEController from "src/api/sse/controllers/event/event-sse.controller"
 import EventService from "src/application/services/event/event.service"
 import EventSSEService from "src/application/services/sse/event/event-sse.service"
+import AppEvent from "src/domain/entities/event.entity"
 import EventRepository from "src/domain/repositories/event.repository"
 import EventRepositoryImpl from "src/infrastructure/database/repositories/event.repository"
 
 @Module({
-  imports: [MikroOrmModule.forFeature([Event])],
+  imports: [MikroOrmModule.forFeature([AppEvent])],
   controllers: [AdminEventController, EventSSEController],
   providers: [
     {

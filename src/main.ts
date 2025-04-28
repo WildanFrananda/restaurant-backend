@@ -10,7 +10,6 @@ import { NestExpressApplication } from "@nestjs/platform-express"
 import JwtAuthGuard from "./common/guards/jwt.guard"
 import { WsAdapter } from "@nestjs/platform-ws"
 import helmet from "helmet"
-import csurf from "csurf"
 
 configDotenv()
 
@@ -28,7 +27,6 @@ async function bootstrap(): Promise<void> {
   app.setGlobalPrefix("api")
   app.enableShutdownHooks()
   app.use(helmet())
-  app.use(csurf({ cookie: true }))
   await app.listen(8080)
   await app.init()
 
