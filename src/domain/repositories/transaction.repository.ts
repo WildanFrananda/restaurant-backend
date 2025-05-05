@@ -16,7 +16,7 @@ abstract class TransactionRepository {
     type: TransactionType,
     status: TransactionStatus,
     failureReason?: TransactionFailureReason,
-    booking?: Booking,
+    booking?: Booking | null,
     notes?: string
   ): Transaction
   abstract findUserTransaction(
@@ -30,6 +30,7 @@ abstract class TransactionRepository {
     page: number,
     limit: number
   ): Promise<[Transaction[], number]>
+  public abstract findTransactionById(id: string): Promise<Transaction | null>
   public abstract reference(id: string): Transaction
 }
 

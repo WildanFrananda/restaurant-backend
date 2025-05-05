@@ -8,6 +8,7 @@ import Table from "src/domain/entities/table.entity"
 import User from "src/domain/entities/user.entity"
 import BookingStatus from "src/domain/enums/booking-status.enum"
 import BookingType from "src/domain/enums/booking-type.enum"
+import ChefLocation from "src/domain/enums/chef-location.enum"
 import BookingRepository from "src/domain/repositories/booking.repository"
 
 @Injectable()
@@ -33,6 +34,7 @@ class BookingRepositoryImpl extends BookingRepository {
     type: BookingType,
     schedule: Date,
     status: BookingStatus,
+    chefLocation?: ChefLocation,
     table?: Table,
     menu?: Menu,
     location?: string
@@ -42,10 +44,12 @@ class BookingRepositoryImpl extends BookingRepository {
       type,
       schedule,
       status,
+      chefLocation,
       table,
       menu,
       location,
-      createdAt: new Date()
+      createdAt: new Date(),
+      totalAmount: 0
     })
 
     return booking

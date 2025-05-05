@@ -1,9 +1,11 @@
-import { Reference, RequiredEntityData } from "@mikro-orm/postgresql"
+import { Reference } from "@mikro-orm/postgresql"
 import Booking from "../entities/booking.entity"
 import BookingType from "../enums/booking-type.enum"
 import Table from "../entities/table.entity"
 import BookingStatus from "../enums/booking-status.enum"
 import Menu from "../entities/menu.entity"
+import ChefLocation from "../enums/chef-location.enum"
+import Transaction from "../entities/transaction.entity"
 
 abstract class BookingRepository {
   public abstract persistAndFlush(
@@ -14,6 +16,7 @@ abstract class BookingRepository {
     type: BookingType,
     schedule: Date,
     status: BookingStatus,
+    chefLocation?: ChefLocation,
     table?: Table,
     menu?: Menu,
     location?: string

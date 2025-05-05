@@ -18,11 +18,7 @@ async function bootstrap(): Promise<void> {
   const reflector = app.get(Reflector)
 
   app.useGlobalGuards(new JwtAuthGuard(reflector))
-  app.useGlobalPipes(new ValidationPipe({
-    transform: true,
-    whitelist: true,
-    forbidNonWhitelisted: true
-  }))
+  app.useGlobalPipes(new ValidationPipe())
   app.useWebSocketAdapter(new WsAdapter())
   app.setGlobalPrefix("api")
   app.enableShutdownHooks()

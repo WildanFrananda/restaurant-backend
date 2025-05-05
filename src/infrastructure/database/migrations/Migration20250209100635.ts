@@ -25,13 +25,13 @@ class Migration20250209100635 extends Migration {
     )
 
     this.addSql(
-      `CREATE TABLE "event" (
+      `CREATE TABLE "app_event" (
         "id" UUID NOT NULL,
         "name" VARCHAR(255) NOT NULL,
         "description" TEXT NOT NULL,
         "is_popup" BOOLEAN NOT NULL,
         "image_url" VARCHAR(255) NULL,
-        CONSTRAINT "event_pkey" PRIMARY KEY ("id")
+        CONSTRAINT "app_event_pkey" PRIMARY KEY ("id")
       );`
     )
 
@@ -81,14 +81,26 @@ class Migration20250209100635 extends Migration {
         "schedule" TIMESTAMPTZ NOT NULL,
         "location" VARCHAR(255) NULL,
         "status" TEXT CHECK ("status" IN ('pending', 'confirmed', 'cancelled')) NOT NULL,
-        "chef_location" TEXT CHECK ("chef_location" IN ('en route', 'arrived', 'cooking', 'completed')) NULL,
+        "chef_location" TEXT CHECK ("chef_location" IN ('en route', 'arrived', 'searching', 'cooking', 'completed')) NULL,
         "menu_id" UUID NULL,
+        "total_amount" NUMERIC(10,2) NOT NULL DEFAULT 0,
         "chef_id" UUID NULL,
         "table_id" UUID NULL,
         "created_at" TIMESTAMPTZ NOT NULL,
         CONSTRAINT "booking_pkey" PRIMARY KEY ("id")
       );`
     )
+
+    this.addSql(`
+      CREATE TABLE "booking_menu" (
+        "id" UUID NOT NULL,
+        "booking_id" UUID NOT NULL,
+        "menu_id" UUID NOT NULL,
+        "quantity" INT NOT NULL,
+        "price_at_booking" NUMERIC(10,2) NOT NULL,
+        CONSTRAINT "booking_menu_pkey" PRIMARY KEY ("id")
+      );
+    `)
 
     this.addSql(
       `CREATE TABLE "transaction" (
@@ -156,6 +168,18 @@ class Migration20250209100635 extends Migration {
       `ALTER TABLE "booking" ADD CONSTRAINT "booking_table_id_foreign" FOREIGN KEY ("table_id") REFERENCES "table" ("id") ON UPDATE CASCADE ON DELETE SET NULL;`
     )
 
+    this.addSql(`
+      ALTER TABLE "booking_menu"
+      ADD CONSTRAINT "booking_menu_booking_id_foreign"
+      FOREIGN KEY ("booking_id") REFERENCES "booking" ("id") ON UPDATE CASCADE ON DELETE CASCADE;
+    `)
+
+    this.addSql(`
+      ALTER TABLE "booking_menu"
+      ADD CONSTRAINT "booking_menu_menu_id_foreign"
+      FOREIGN KEY ("menu_id") REFERENCES "menu" ("id") ON UPDATE CASCADE ON DELETE CASCADE;
+    `)
+
     this.addSql(
       `ALTER TABLE "transaction" ADD CONSTRAINT "transaction_user_id_foreign" FOREIGN KEY ("user_id") REFERENCES "user" ("id") ON UPDATE CASCADE;`
     )
@@ -186,10 +210,12 @@ class Migration20250209100635 extends Migration {
   public override async down(): Promise<void> {
     this.addSql(`
       DROP TABLE IF EXISTS "review";
+      DROP TABLE IF EXISTS "app_event";
       DROP TABLE IF EXISTS "event";
       DROP TABLE IF EXISTS "transaction";
       DROP TABLE IF EXISTS "booking";
       DROP TABLE IF EXISTS "table";
+      DROP TABLE IF EXISTS "booking_menu";
       DROP TABLE IF EXISTS "chef";
       DROP TABLE IF EXISTS "menu";
       DROP TABLE IF EXISTS "category";

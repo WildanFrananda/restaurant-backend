@@ -34,7 +34,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
     type: TransactionType,
     status: TransactionStatus,
     failureReason?: TransactionFailureReason,
-    booking?: Booking,
+    booking?: Booking | null,
     notes?: string
   ): Transaction {
     const transaction = this.transactionRepository.create({
@@ -97,6 +97,10 @@ class TransactionRepositoryImpl extends TransactionRepository {
     )
 
     return [transactions, total]
+  }
+
+  public override async findTransactionById(id: string): Promise<Transaction | null> {
+    return await this.transactionRepository.findOne(id)
   }
 
   public override reference(id: string): Transaction {

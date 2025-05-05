@@ -74,32 +74,42 @@ class WalletService {
   public async payment(
     userId: string,
     bookingId: string,
-    amount: number
-  ): Promise<{ message: string }> {
+    amount: number,
+    notes?: string
+  ): Promise<{
+    message: string
+    transaction: { id: string; amount: number; status: TransactionStatus }
+  }> {
     const profile = await this.userRepository.findUserProfileByUserId(userId)
 
     if (!profile) {
       throw new NotFoundException("User not found")
     }
 
-    const booking = await this.bookingRepository.filterBookingById(bookingId)
+    let booking = null
 
-    if (!booking) {
-      throw new NotFoundException("Booking not found")
+    if (!bookingId.startsWith("temp_")) {
+      booking = await this.bookingRepository.filterBookingById(bookingId)
+
+      if (!booking) {
+        throw new NotFoundException("Booking not found")
+      }
     }
 
     if (Number(profile.walletBallance) < amount) {
-      const failedTransaction = this.transactionRepository.createTransaction(
-        profile.user,
-        amount,
-        TransactionType.PAYMENT,
-        TransactionStatus.FAILED,
-        TransactionFailureReason.INSUFFICIENT_BALANCE,
-        booking
-      )
+      if (booking) {
+        const failedTransaction = this.transactionRepository.createTransaction(
+          profile.user,
+          amount,
+          TransactionType.PAYMENT,
+          TransactionStatus.FAILED,
+          TransactionFailureReason.INSUFFICIENT_BALANCE,
+          booking,
+          notes
+        )
 
-      await this.transactionRepository.persistAndFlush(failedTransaction)
-
+        await this.transactionRepository.persistAndFlush(failedTransaction)
+      }
       throw new BadRequestException("Insufficient funds for this transaction")
     }
 
@@ -113,7 +123,8 @@ class WalletService {
       TransactionType.PAYMENT,
       TransactionStatus.SUCCESS,
       undefined,
-      booking
+      booking,
+      notes
     )
 
     await this.transactionRepository.persistAndFlush(transaction)
@@ -130,8 +141,13 @@ class WalletService {
     }
 
     this.walletGateway.notifyWalletUpdate(payload)
+    this.walletSSEService.notifyWalletUpdate(payload)
 
-    if (booking.type === BookingType.HOME_DINE_IN && booking.status === BookingStatus.CONFIRMED) {
+    if (
+      booking &&
+      booking.type === BookingType.HOME_DINE_IN &&
+      booking.status === BookingStatus.PENDING
+    ) {
       const adminPayload: AdminBookingNotification = {
         type: "adminBookingNotification",
         data: {
@@ -145,7 +161,35 @@ class WalletService {
       this.adminWalletSSEService.notifyAdminsOfWalletUpdate(adminPayload)
     }
 
-    return { message: "Payment successful" }
+    return {
+      message: "Payment successful",
+      transaction: {
+        id: transaction.id,
+        amount: transaction.amount,
+        status: transaction.status
+      }
+    }
+  }
+
+  public async updateTransactionBookingId(
+    transactionId: string,
+    bookingId: string
+  ): Promise<void> {
+    const transaction = await this.transactionRepository.findTransactionById(transactionId)
+
+    if (!transaction) {
+      throw new NotFoundException("Transaction not found")
+    }
+
+    const booking = await this.bookingRepository.findBookingById(bookingId)
+
+    if (!booking) {
+      throw new NotFoundException("Booking not found")
+    }
+
+    transaction.booking = booking
+
+    await this.transactionRepository.persistAndFlush(transaction)
   }
 }
 

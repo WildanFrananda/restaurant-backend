@@ -1,4 +1,5 @@
 enum ChefLocation {
+  SEARCHING = "searching",
   EN_ROUTE = "en route",
   ARRIVED = "arrived",
   COOKING = "cooking",

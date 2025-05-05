@@ -9,6 +9,8 @@ import ChefStatus from "src/domain/enums/chef-status.enum"
 import BookingRepository from "src/domain/repositories/booking.repository"
 import MenuRepository from "src/domain/repositories/menu.repository"
 import TableRepository from "src/domain/repositories/table.repository"
+import WalletService from "../wallet/wallet.service"
+import BookingMenuRepository from "src/domain/repositories/booking-menu.repository"
 
 @Injectable()
 class BookingService {
@@ -16,11 +18,14 @@ class BookingService {
     private readonly chefGateway: ChefGateway,
     private readonly bookingRepository: BookingRepository,
     private readonly tableRepository: TableRepository,
-    private readonly menuRepository: MenuRepository
+    private readonly menuRepository: MenuRepository,
+    private readonly bookingMenuRepository: BookingMenuRepository,
+    private readonly walletService: WalletService
   ) {}
 
   public async createBooking(dto: CreateBookingDTO, userId: string): Promise<Booking> {
-    const { type, schedule, location, menuId, tableId } = dto
+    const { type, schedule: rawSchedule, location, menuItems, tableId } = dto
+    const schedule = rawSchedule ? new Date(rawSchedule) : new Date()
 
     if (type === BookingType.RESTAURANT) {
       if (!tableId) {
@@ -37,7 +42,8 @@ class BookingService {
         { id: userId },
         type,
         new Date(schedule),
-        BookingStatus.PENDING,
+        BookingStatus.CONFIRMED,
+        undefined,
         table
       )
 
@@ -45,29 +51,74 @@ class BookingService {
 
       return booking
     } else if (type === BookingType.HOME_DINE_IN) {
-      if (!menuId || !location) {
+      if (!menuItems || menuItems.length === 0 || !location) {
         throw new BadRequestException("menuId and location are required for home dine in bookings")
       }
 
-      const menu = await this.menuRepository.findOneMenuById(menuId)
+      let totalAmount = 0
+      const menuDetails = []
 
-      if (!menu) {
-        throw new NotFoundException("Menu not found")
+      for (const item of menuItems) {
+        const menu = await this.menuRepository.findOneMenuById(item.menuId)
+
+        if (!menu) {
+          throw new NotFoundException("Menu not found")
+        }
+
+        menuDetails.push({
+          menu,
+          quantity: item.quantity,
+          priceAtBooking: Number(menu.price)
+        })
+
+        totalAmount += Number(menu.price) * item.quantity
       }
 
-      const booking = this.bookingRepository.create(
-        { id: userId },
-        type,
-        new Date(schedule),
-        BookingStatus.PENDING,
-        undefined,
-        menu,
-        location
-      )
+      try {
+        const tempBookingId = `temp_${userId}-${new Date().getTime()}`
+        const paymentResult = await this.walletService.payment(
+          userId,
+          tempBookingId,
+          totalAmount,
+          `Pre-payment for booking: ${tempBookingId}`
+        )
 
-      await this.bookingRepository.persistAndFlush(booking)
+        const booking = this.bookingRepository.create(
+          { id: userId },
+          type,
+          new Date(schedule),
+          BookingStatus.PENDING,
+          ChefLocation.SEARCHING,
+          undefined,
+          menuDetails[0].menu,
+          location
+        )
 
-      return booking
+        booking.totalAmount = totalAmount
+
+        await this.bookingRepository.persistAndFlush(booking)
+
+        for (const item of menuDetails) {
+          const bookingMenu = this.bookingMenuRepository.createBookingMenu(
+            booking,
+            item.menu,
+            item.quantity,
+            item.priceAtBooking
+          )
+
+          await this.bookingMenuRepository.persistAndFlush(bookingMenu)
+        }
+
+        await this.walletService.updateTransactionBookingId(
+          paymentResult.transaction.id,
+          booking.id
+        )
+
+        return booking
+      } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : "Unknown error"
+        throw new BadRequestException(`Payment failed: ${errorMessage}`)
+      }
     } else {
       throw new BadRequestException("Invalid booking type")
     }
@@ -81,6 +132,10 @@ class BookingService {
     }
 
     return booking
+  }
+
+  public async getBookingMenus(bookingId: string) {
+    return await this.bookingMenuRepository.findByBookingId(bookingId)
   }
 
   public orderCompleted(bookingId: string, chefId: string): void {
