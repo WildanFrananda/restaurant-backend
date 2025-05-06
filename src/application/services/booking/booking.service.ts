@@ -28,14 +28,33 @@ class BookingService {
     const schedule = rawSchedule ? new Date(rawSchedule) : new Date()
 
     if (type === BookingType.RESTAURANT) {
-      if (!tableId) {
-        throw new BadRequestException("tableId is required for restaurant bookings")
+      if (!tableId || !menuItems || menuItems.length === 0) {
+        throw new BadRequestException("tableId and menuItems are required for restaurant bookings")
       }
 
       const table = await this.tableRepository.findOneTable(tableId)
 
       if (!table) {
         throw new NotFoundException("Table not found")
+      }
+
+      let totalAmount = 0
+      const menuDetails = []
+
+      for (const item of menuItems) {
+        const menu = await this.menuRepository.findOneMenuById(item.menuId)
+
+        if (!menu) {
+          throw new NotFoundException("Menu not found")
+        }
+
+        menuDetails.push({
+          menu,
+          quantity: item.quantity,
+          priceAtBooking: Number(menu.price)
+        })
+
+        totalAmount += Number(menu.price) * item.quantity
       }
 
       const booking = this.bookingRepository.create(
@@ -47,7 +66,20 @@ class BookingService {
         table
       )
 
+      booking.totalAmount = totalAmount
+
       await this.bookingRepository.persistAndFlush(booking)
+
+      for (const item of menuDetails) {
+        const bookingMenu = this.bookingMenuRepository.createBookingMenu(
+          booking,
+          item.menu,
+          item.quantity,
+          item.priceAtBooking
+        )
+
+        await this.bookingMenuRepository.persistAndFlush(bookingMenu)
+      }
 
       return booking
     } else if (type === BookingType.HOME_DINE_IN) {

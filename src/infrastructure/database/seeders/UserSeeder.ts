@@ -12,7 +12,8 @@ class UserSeeder extends Seeder {
     const admin = await new UserFactory(em).createOne({
       email: "wildanfrananda@fullstack.dev",
       password: hashedAdminPassword,
-      role: UserRole.ADMIN
+      role: UserRole.ADMIN,
+      isVerified: true
     })
 
     await new UserProfileFactory(em).createOne({ name: "Wildan Frananda", user: admin })
