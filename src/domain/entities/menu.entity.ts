@@ -38,7 +38,7 @@ class Menu {
   @Property()
   imageUrl: string
 
-  @OneToMany(() => Review, (review) => review.menu)
+  @OneToMany(() => Review, review => review.menu, { orphanRemoval: true })
   reviews = new Collection<Review>(this)
 }
 

@@ -193,7 +193,7 @@ class Migration20250209100635 extends Migration {
     )
 
     this.addSql(
-      `ALTER TABLE "review" ADD CONSTRAINT "review_menu_id_foreign" FOREIGN KEY ("menu_id") REFERENCES "menu" ("id") ON UPDATE CASCADE;`
+      `ALTER TABLE "review" ADD CONSTRAINT "review_menu_id_foreign" FOREIGN KEY ("menu_id") REFERENCES "menu" ("id") ON UPDATE CASCADE ON DELETE CASCADE;`
     )
 
     this.addSql(

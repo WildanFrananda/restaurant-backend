@@ -63,7 +63,8 @@ class BookingService {
         new Date(schedule),
         BookingStatus.CONFIRMED,
         undefined,
-        table
+        table,
+        menuDetails[0].menu
       )
 
       booking.totalAmount = totalAmount
