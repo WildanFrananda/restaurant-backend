@@ -2,7 +2,7 @@ import { Entity, ManyToOne, OneToOne, PrimaryKey, Property } from "@mikro-orm/co
 import { v4 } from "uuid"
 import User from "./user.entity"
 import Menu from "./menu.entity"
-import Transaction from "./transaction.entity"
+import Booking from "./booking.entity"
 
 @Entity()
 class Review {
@@ -15,8 +15,8 @@ class Review {
   @ManyToOne(() => Menu)
   menu: Menu
 
-  @OneToOne(() => Transaction)
-  transaction: Transaction
+  @OneToOne(() => Booking)
+  booking: Booking
 
   @Property({ type: "numeric" })
   rating: number

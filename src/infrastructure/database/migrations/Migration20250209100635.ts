@@ -124,13 +124,13 @@ class Migration20250209100635 extends Migration {
         "id" UUID NOT NULL,
         "user_id" UUID NOT NULL,
         "menu_id" UUID NOT NULL,
-        "transaction_id" UUID NOT NULL,
+        "booking_id" UUID NOT NULL,
         "rating" NUMERIC(10,0) NOT NULL,
         "comment" TEXT NULL,
         "created_at" TIMESTAMPTZ NOT NULL,
         "updated_at" TIMESTAMPTZ NOT NULL,
         CONSTRAINT "review_pkey" PRIMARY KEY ("id"),
-        CONSTRAINT "review_transaction_id_unique" UNIQUE ("transaction_id")
+        CONSTRAINT "review_booking_id_unique" UNIQUE ("booking_id")
       );`
     )
 
@@ -197,7 +197,7 @@ class Migration20250209100635 extends Migration {
     )
 
     this.addSql(
-      `ALTER TABLE "review" ADD CONSTRAINT "review_transaction_id_foreign" FOREIGN KEY ("transaction_id") REFERENCES "transaction" ("id") ON UPDATE CASCADE;`
+      `ALTER TABLE "review" ADD CONSTRAINT "review_booking_id_foreign" FOREIGN KEY ("booking_id") REFERENCES "booking" ("id") ON UPDATE CASCADE;`
     )
 
     this.addSql(

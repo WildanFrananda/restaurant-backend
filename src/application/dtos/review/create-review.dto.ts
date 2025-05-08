@@ -3,7 +3,7 @@ import { IsNotEmpty, IsNumber, IsOptional, IsString, Min, Max } from "class-vali
 class CreateReviewDTO {
   @IsNotEmpty()
   @IsString()
-  transactionId!: string
+  bookingId!: string
 
   @IsNotEmpty()
   @IsString()

@@ -68,6 +68,10 @@ class BookingRepositoryImpl extends BookingRepository {
   ): Promise<Booking[] | null> {
     return await this.bookingRepository.find(conditions, { populate: ["menu", "table", "chef"] })
   }
+
+  public override reference(id: string): Booking {
+    return this.bookingRepository.getEntityManager().getReference(Booking, id)
+  }
 }
 
 export default BookingRepositoryImpl

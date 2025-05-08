@@ -2,6 +2,7 @@ import { Reference } from "@mikro-orm/core"
 import { EntityName, InjectRepository } from "@mikro-orm/nestjs"
 import { EntityManager, EntityRepository } from "@mikro-orm/postgresql"
 import { Inject, Injectable } from "@nestjs/common"
+import Booking from "src/domain/entities/booking.entity"
 import Menu from "src/domain/entities/menu.entity"
 import Review from "src/domain/entities/review.entity"
 import Transaction from "src/domain/entities/transaction.entity"
@@ -26,17 +27,17 @@ class ReviewRepositoryImpl extends ReviewRepository {
     await this.em.flush()
   }
 
-  public createReview(
+  public override createReview(
     user: User,
     menu: Menu,
-    transaction: Transaction,
+    booking: Booking,
     rating: number,
     comment?: string
   ): Review {
     return this.reviewRepository.create({
       user,
       menu,
-      transaction,
+      booking,
       rating,
       comment,
       createdAt: new Date(),
@@ -44,8 +45,8 @@ class ReviewRepositoryImpl extends ReviewRepository {
     })
   }
 
-  public override findOneReviewByTransaction(id: string): Promise<Review | null> {
-    return this.reviewRepository.findOne({ transaction: { id: id } })
+  public override findOneReviewByBooking(id: string): Promise<Review | null> {
+    return this.reviewRepository.findOne({ booking: { id: id } })
   }
 
   public override async findReviewByMenu(menuId: string): Promise<Review[]> {

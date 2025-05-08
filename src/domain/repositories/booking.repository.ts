@@ -5,7 +5,6 @@ import Table from "../entities/table.entity"
 import BookingStatus from "../enums/booking-status.enum"
 import Menu from "../entities/menu.entity"
 import ChefLocation from "../enums/chef-location.enum"
-import Transaction from "../entities/transaction.entity"
 
 abstract class BookingRepository {
   public abstract persistAndFlush(
@@ -26,6 +25,7 @@ abstract class BookingRepository {
   public abstract filterBookingByConditions(
     conditions: Record<string, unknown>
   ): Promise<Booking[] | null>
+  public abstract reference(id: string): Booking
 }
 
 export default BookingRepository
