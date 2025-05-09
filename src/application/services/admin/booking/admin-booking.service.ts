@@ -7,6 +7,7 @@ import AssignChefDTO from "src/application/dtos/chef/assign-chef.dto"
 import ChefRepository from "src/domain/repositories/chef.repository"
 import ChefGateway from "src/api/websocket/gateways/chef/chef.gateway"
 import ChefStatus from "src/domain/enums/chef-status.enum"
+import BookingStatus from "src/domain/enums/booking-status.enum"
 
 @Injectable()
 class AdminBookingService {
@@ -65,6 +66,7 @@ class AdminBookingService {
     }
 
     booking.chef = chef
+    booking.status = BookingStatus.CONFIRMED
 
     this.chefGateway.updateChefStatus(chefId, ChefStatus.BOOKED)
 

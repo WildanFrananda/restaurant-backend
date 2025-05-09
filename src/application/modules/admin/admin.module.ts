@@ -2,6 +2,7 @@ import { MikroOrmModule } from "@mikro-orm/nestjs"
 import { Module } from "@nestjs/common"
 import { JwtModule } from "@nestjs/jwt"
 import AdminBookingController from "src/api/http/controllers/admin/booking/admin-booking.controller"
+import AdminChefController from "src/api/http/controllers/admin/chef/admin-chef.controller"
 import AdminCategoryController from "src/api/http/controllers/admin/menu/admin-category.controller"
 import AdminMenuController from "src/api/http/controllers/admin/menu/admin-menu.controller"
 import AdminTableController from "src/api/http/controllers/admin/table/admin-table.controller"
@@ -12,6 +13,7 @@ import WsBinary from "src/application/handlers/ws-binary.handler"
 import WsConnection from "src/application/handlers/ws-connection.handler"
 import WsRoom from "src/application/handlers/ws-room.handler"
 import AdminBookingService from "src/application/services/admin/booking/admin-booking.service"
+import AdminChefService from "src/application/services/admin/chef/admin-chef.service"
 import AdminCategoryService from "src/application/services/admin/menu/admin-category.service"
 import AdminMenuService from "src/application/services/admin/menu/admin-menu.service"
 import AdminUserService from "src/application/services/admin/user/admin-user.service"
@@ -82,6 +84,7 @@ import UserRepositoryImpl from "src/infrastructure/database/repositories/user.re
     AdminMenuService,
     AdminCategoryService,
     AdminBookingService,
+    AdminChefService,
     TableService,
     WsAdapterHandler,
     WsRoom,
@@ -92,6 +95,7 @@ import UserRepositoryImpl from "src/infrastructure/database/repositories/user.re
     ChefGateway
   ],
   controllers: [
+    AdminChefController,
     AdminMenuController,
     AdminCategoryController,
     AdminBookingController,
