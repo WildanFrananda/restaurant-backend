@@ -7,6 +7,8 @@ abstract class UserRepository {
   public abstract persistAndFlush(
     data: object | Reference<object> | Iterable<object | Reference<object>>
   ): Promise<void>
+  public abstract adminFindAllUser(): Promise<User[] | null>
+  public abstract AdminFindUserId(id: string): Promise<User | null>
   public abstract findUserId(id: string): Promise<User | null>
   public abstract findUserEmail(email: string): Promise<User | null>
   public abstract findUserWithProfile(userId: string): Promise<User | null>

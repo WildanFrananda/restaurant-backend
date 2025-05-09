@@ -27,6 +27,16 @@ class UserRepositoryImpl extends UserRepository {
     await this.em.flush()
   }
 
+  public async adminFindAllUser(): Promise<User[] | null> {
+    return await this.userRepository.findAll({ populate: ["profile"] })
+  }
+
+  public async AdminFindUserId(userId: string): Promise<User | null> {
+    const user = await this.userRepository.findOne({ id: userId }, { populate: ["profile"] })
+
+    return user
+  }
+
   public override async findUserId(id: string): Promise<User | null> {
     return await this.userRepository.findOne({ id })
   }
