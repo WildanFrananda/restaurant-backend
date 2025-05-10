@@ -11,6 +11,8 @@ import MenuRepository from "src/domain/repositories/menu.repository"
 import TableRepository from "src/domain/repositories/table.repository"
 import WalletService from "../wallet/wallet.service"
 import BookingMenuRepository from "src/domain/repositories/booking-menu.repository"
+import GetBookingHistoryDto from "src/application/dtos/booking/get-booking-history.dto"
+import BookingGateway from "src/api/websocket/gateways/booking/booking.gateway"
 
 @Injectable()
 class BookingService {
@@ -20,7 +22,8 @@ class BookingService {
     private readonly tableRepository: TableRepository,
     private readonly menuRepository: MenuRepository,
     private readonly bookingMenuRepository: BookingMenuRepository,
-    private readonly walletService: WalletService
+    private readonly walletService: WalletService,
+    private readonly bookingGateway: BookingGateway
   ) {}
 
   public async createBooking(dto: CreateBookingDTO, userId: string): Promise<Booking> {
@@ -81,6 +84,15 @@ class BookingService {
 
         await this.bookingMenuRepository.persistAndFlush(bookingMenu)
       }
+
+      this.bookingGateway.sendBookingCreated(booking)
+      this.bookingGateway.notifyUser(userId, "bookingCreated", {
+        bookingId: booking.id,
+        status: booking.status,
+        type: booking.type,
+        message: "Your restaurant booking has been confirmed!"
+      })
+
 
       return booking
     } else if (type === BookingType.HOME_DINE_IN) {
@@ -147,6 +159,14 @@ class BookingService {
           booking.id
         )
 
+        this.bookingGateway.sendBookingCreated(booking)
+        this.bookingGateway.notifyUser(userId, "bookingCreated", {
+          bookingId: booking.id,
+          status: booking.status,
+          type: booking.type,
+          message: "Your home dine-in booking is pending, searching for a chef."
+        })
+
         return booking
       } catch (error: unknown) {
         const errorMessage = error instanceof Error ? error.message : "Unknown error"
@@ -171,9 +191,45 @@ class BookingService {
     return await this.bookingMenuRepository.findByBookingId(bookingId)
   }
 
-  public orderCompleted(bookingId: string, chefId: string): void {
+  public async getHistory(
+    userId: string,
+    dto: GetBookingHistoryDto
+  ): Promise<{ data: Booking[]; total: number; page: number; limit: number }> {
+    const { limit, page, status, type, startDate, endDate } = dto
+    const conditions: Record<string, unknown> = {
+      user: { id: userId }
+    }
+
+    if (status) {
+      conditions.status = status
+    }
+    if (type) {
+      conditions.type = type
+    }
+    if (startDate) {
+      conditions.schedule = { $gte: new Date(startDate) }
+    }
+    if (endDate) {
+      conditions.schedule = {
+        ...(conditions.schedule as object),
+        $lte: new Date(endDate)
+      }
+    }
+
+    const [bookings, total] = await this.bookingRepository.findUserHistory(conditions, limit, page)
+
+    return { data: bookings, total, page, limit }
+  }
+
+  public orderCompleted(userId: string, bookingId: string, chefId: string): void {
     this.chefGateway.updateChefStatus(chefId, ChefStatus.AVAILABLE)
     this.chefGateway.updateChefLocation(chefId, bookingId, ChefLocation.COMPLETED)
+
+    this.bookingGateway.notifyUser(userId, "bookingUpdated", {
+      bookingId,
+      newStatus: BookingStatus.CONFIRMED,
+      updatedAt: new Date().toISOString()
+    })
   }
 }
 

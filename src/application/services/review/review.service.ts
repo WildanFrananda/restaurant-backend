@@ -1,5 +1,11 @@
-import { BadRequestException, Injectable } from "@nestjs/common"
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException
+} from "@nestjs/common"
 import CreateReviewDTO from "src/application/dtos/review/create-review.dto"
+import UpdateReviewDto from "src/application/dtos/review/update-review.dto"
 import Review from "src/domain/entities/review.entity"
 import BookingRepository from "src/domain/repositories/booking.repository"
 import MenuRepository from "src/domain/repositories/menu.repository"
@@ -31,6 +37,49 @@ class ReviewService {
     await this.reviewRepository.persistAndFlush(review)
 
     return review
+  }
+
+  public async getUserReviews(userId: string): Promise<Review[]> {
+    return await this.reviewRepository.findUserReviews(userId)
+  }
+
+  public async updateReview(
+    userId: string,
+    reviewId: string,
+    dto: UpdateReviewDto
+  ): Promise<Review> {
+    const { comment, rating } = dto
+    const review = await this.reviewRepository.findOneReviewById(reviewId)
+
+    if (!review) {
+      throw new NotFoundException("Review not found!")
+    }
+
+    if (review.user.id !== userId) {
+      throw new ForbiddenException("You are not allowed to update this review!")
+    }
+
+    if (rating !== undefined) review.rating = rating
+    if (comment !== undefined) review.comment = comment
+
+    await this.reviewRepository.persistAndFlush(review)
+
+    return review
+  }
+
+  public async deleteReview(userId: string, reviewId: string): Promise<{ message: string }> {
+    const review = await this.reviewRepository.findOneReviewById(reviewId)
+
+    if (!review) {
+      throw new NotFoundException("Review not found")
+    }
+    if (review.user.id !== userId) {
+      throw new ForbiddenException("Cannot delete others' review")
+    }
+
+    await this.reviewRepository.removeAndFlush(review)
+
+    return { message: "Review deleted successfully" }
   }
 
   public async getReviewByMenu(menuId: string): Promise<Review[]> {

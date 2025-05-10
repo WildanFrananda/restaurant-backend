@@ -1,4 +1,4 @@
-import { Reference } from "@mikro-orm/postgresql"
+import { Loaded, Reference } from "@mikro-orm/postgresql"
 import Booking from "../entities/booking.entity"
 import BookingType from "../enums/booking-type.enum"
 import Table from "../entities/table.entity"
@@ -20,6 +20,11 @@ abstract class BookingRepository {
     menu?: Menu,
     location?: string
   ): Booking
+  public abstract findUserHistory(
+    conditions: Record<string, unknown>,
+    limit: number,
+    page: number
+  ): Promise<[Loaded<Booking, "chef" | "table" | "menu" | "transactions", "*", never>[], number]>
   public abstract filterBookingById(id: string): Promise<Booking | null>
   public abstract findBookingById(id: string): Promise<Booking | null>
   public abstract filterBookingByConditions(

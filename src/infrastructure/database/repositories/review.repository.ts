@@ -27,6 +27,13 @@ class ReviewRepositoryImpl extends ReviewRepository {
     await this.em.flush()
   }
 
+  public override async removeAndFlush(
+    data: object | Reference<object> | Iterable<object | Reference<object>>
+  ): Promise<void> {
+    this.em.remove(data)
+    await this.em.flush()
+  }
+
   public override createReview(
     user: User,
     menu: Menu,
@@ -54,6 +61,14 @@ class ReviewRepositoryImpl extends ReviewRepository {
       { menu: { id: menuId } },
       { orderBy: { createdAt: "DESC" } }
     )
+  }
+
+  public override async findUserReviews(userId: string): Promise<Review[]> {
+    return await this.reviewRepository.find({ user: { id: userId } })
+  }
+
+  public override async findOneReviewById(id: string): Promise<Review | null> {
+    return await this.reviewRepository.findOne({ id }, { populate: ["user"] })
   }
 
   public override getEntity(): EntityManager {

@@ -24,7 +24,8 @@
     "test:watch": "vitest --watch",
     "test:cov": "vitest run --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/vitest --runInBand",
-    "test:e2e": "vitest test/**/*.e2e-spec.ts"
+    "test:e2e": "vitest run --config vitest.config.ts test/e2e/**/*.e2e-spec.ts",
+    "test:integration": "vitest run --config vitest.config.ts test/integration/**/*.spec.ts"
   },
   "dependencies": {
     "@faker-js/faker": "^9.4.0",
@@ -52,6 +53,7 @@
     "class-validator": "^0.14.1",
     "csurf": "^1.11.0",
     "dotenv": "^16.4.7",
+    "events": "^3.3.0",
     "eventsource": "^3.0.6",
     "helmet": "^8.1.0",
     "nodemailer": "^6.10.0",
@@ -80,6 +82,7 @@
     "@types/cookiejar": "^2.1.5",
     "@types/csurf": "^1.11.5",
     "@types/estree": "^1.0.6",
+    "@types/events": "^3.0.3",
     "@types/eventsource": "^3.0.0",
     "@types/express": "^5.0.0",
     "@types/helmet": "^4.0.0",

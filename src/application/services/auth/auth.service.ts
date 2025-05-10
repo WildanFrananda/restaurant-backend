@@ -71,14 +71,14 @@ class AuthService {
     return {
       id: user.id,
       email: user.email,
-      access_token: await this.jwtService.signAsync(payload, { expiresIn: "24h" })
+      access_token: await this.jwtService.signAsync(payload, { expiresIn: "7d" })
     }
   }
 
   public generateVerificationToken(user: User): string {
     const payload = { sub: user.id, email: user.email, type: "emailVerification" }
 
-    return this.jwtService.sign(payload, { expiresIn: "24h" })
+    return this.jwtService.sign(payload, { expiresIn: "7d" })
   }
 
   public async verifyEmailToken(token: string): Promise<boolean> {

@@ -31,7 +31,7 @@ import UserRepositoryImpl from "src/infrastructure/database/repositories/user.re
     MikroOrmModule.forFeature([Transaction, User, UserProfile, Booking]),
     JwtModule.register({
       secret: process.env.JWT_SECRET || "SECRET",
-      signOptions: { expiresIn: "1h" }
+      signOptions: { expiresIn: "7d" }
     })
   ],
   providers: [

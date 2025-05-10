@@ -1,4 +1,6 @@
-interface NotificationEvent {
+import BaseSSEEvent from "../base.event"
+
+interface NotificationEvent extends BaseSSEEvent {
   type: "newPromo" | "eventUpdated" | "eventPopup"
   data: {
     id: string

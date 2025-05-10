@@ -48,7 +48,7 @@ import UserRepositoryImpl from "src/infrastructure/database/repositories/user.re
     MikroOrmModule.forFeature([Chef, Menu, Category, Booking, Table, User, UserProfile]),
     JwtModule.register({
       secret: process.env.JWT_SECRET || "SECRET",
-      signOptions: { expiresIn: "1h" }
+      signOptions: { expiresIn: "7d" }
     })
   ],
   providers: [

@@ -21,7 +21,10 @@ abstract class BaseSSE<T extends BaseSSEEvent> {
     })
   }
 
-  public async createEventStream(clientId: string, user: JwtType): Promise<Observable<MessageEvent>> {
+  public async createEventStream(
+    clientId: string,
+    user: JwtType
+  ): Promise<Observable<MessageEvent>> {
     try {
       await this.rateLimiter.consume(user.userId)
 

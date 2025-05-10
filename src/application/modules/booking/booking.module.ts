@@ -4,6 +4,7 @@ import { JwtModule } from "@nestjs/jwt"
 
 // Controllers
 import BookingController from "src/api/http/controllers/booking/booking.controller"
+import BookingGateway from "src/api/websocket/gateways/booking/booking.gateway"
 
 // Gateways
 import ChefGateway from "src/api/websocket/gateways/chef/chef.gateway"
@@ -67,7 +68,7 @@ import UserRepositoryImpl from "src/infrastructure/database/repositories/user.re
     ]),
     JwtModule.register({
       secret: process.env.JWT_SECRET || "SECRET",
-      signOptions: { expiresIn: "1h" }
+      signOptions: { expiresIn: "7d" }
     })
   ],
   controllers: [BookingController],
@@ -101,7 +102,8 @@ import UserRepositoryImpl from "src/infrastructure/database/repositories/user.re
 
     // Gateways
     ChefGateway,
-    WalletGateway
+    WalletGateway,
+    BookingGateway
   ]
 })
 export class BookingModule {}

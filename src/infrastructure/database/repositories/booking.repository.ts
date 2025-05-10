@@ -1,4 +1,4 @@
-import { Reference } from "@mikro-orm/core"
+import { Loaded, Reference } from "@mikro-orm/core"
 import { InjectRepository } from "@mikro-orm/nestjs"
 import { EntityManager, EntityRepository } from "@mikro-orm/postgresql"
 import { Inject, Injectable } from "@nestjs/common"
@@ -67,6 +67,19 @@ class BookingRepositoryImpl extends BookingRepository {
     conditions: Record<string, unknown>
   ): Promise<Booking[] | null> {
     return await this.bookingRepository.find(conditions, { populate: ["menu", "table", "chef"] })
+  }
+
+  public override async findUserHistory(
+    conditions: Record<string, unknown>,
+    limit: number,
+    page: number
+  ): Promise<[Loaded<Booking, "chef" | "table" | "menu" | "transactions", "*", never>[], number]> {
+    return await this.bookingRepository.findAndCount(conditions, {
+      populate: ["menu", "table", "chef", "transactions"],
+      orderBy: { createdAt: "DESC" },
+      limit,
+      offset: (page - 1) * limit
+    })
   }
 
   public override reference(id: string): Booking {

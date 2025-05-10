@@ -3,8 +3,9 @@ import type BookingMenu from "src/domain/entities/booking-menu.entity"
 import type CreateBookingDTO from "src/application/dtos/booking/create-booking.dto"
 import type OrderCompleteDTO from "src/application/dtos/booking/order-complete.dto"
 import type AuthenticatedRequest from "src/common/types/user.type"
-import { Body, Controller, Get, Param, Post, Req } from "@nestjs/common"
+import { Body, Controller, Get, Param, Post, Query, Req } from "@nestjs/common"
 import BookingService from "src/application/services/booking/booking.service"
+import GetBookingHistoryDto from "src/application/dtos/booking/get-booking-history.dto"
 
 @Controller("booking")
 class BookingController {
@@ -32,8 +33,14 @@ class BookingController {
 
   @Post("complete")
   public orderCompleted(@Body() dto: OrderCompleteDTO): void {
-    const { bookingId, chefId } = dto
-    return this.bookingService.orderCompleted(bookingId, chefId)
+    const { userId, bookingId, chefId } = dto
+    return this.bookingService.orderCompleted(userId, bookingId, chefId)
+  }
+
+  @Get()
+  async getHistory(@Req() req: AuthenticatedRequest, @Query() query: GetBookingHistoryDto) {
+    const userId = req.user.userId
+    return this.bookingService.getHistory(userId, query)
   }
 }
 
