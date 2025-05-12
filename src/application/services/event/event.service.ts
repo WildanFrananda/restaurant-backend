@@ -12,6 +12,10 @@ class EventService {
     private readonly eventSseService: EventSSEService
   ) {}
 
+  public async findAllEvents(): Promise<AppEvent[]> {
+    return await this.eventRepository.findAllEvents()
+  }
+
   public async createEvent(dto: CreateEventDTO): Promise<AppEvent> {
     const { name, description, isPopup, imageUrl } = dto
     const event = this.eventRepository.createEvent(name, description, isPopup, imageUrl)

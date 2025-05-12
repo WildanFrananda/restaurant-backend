@@ -24,7 +24,7 @@
     "test:watch": "vitest --watch",
     "test:cov": "vitest run --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/vitest --runInBand",
-    "test:e2e": "vitest run --config vitest.config.ts test/e2e/**/*.e2e-spec.ts",
+    "test:e2e": "vitest run --config vitest.config.e2e.mts",
     "test:integration": "vitest run --config vitest.config.ts test/integration/**/*.spec.ts"
   },
   "dependencies": {
@@ -116,7 +116,7 @@
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0",
     "unplugin-swc": "^1.5.1",
-    "vite-tsconfig-paths": "^5.1.4",
+    "vite-tsconfig-paths": "^4.0.0",
     "vitest": "^3.0.5"
   },
   "jest": {

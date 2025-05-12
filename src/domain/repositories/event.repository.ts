@@ -8,6 +8,7 @@ abstract class EventRepository {
   public abstract removeAndFlush(
     data: AnyEntity | Reference<AnyEntity> | Iterable<AnyEntity | Reference<AnyEntity>>
   ): Promise<void>
+  public abstract findAllEvents(): Promise<AppEvent[]>
   public abstract createEvent(
     name: string,
     description: string,

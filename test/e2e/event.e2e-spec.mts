@@ -1,5 +1,10 @@
 import { HttpServer, HttpStatus, INestApplication } from "@nestjs/common"
-import { afterAll, beforeAll, describe, expect, it, vi } from "vitest"
+import { vi } from "vitest"
+import MockEventSource from "test/mocks/mock-event-source"
+
+vi.mock("eventsource", () => ({ default: MockEventSource }))
+
+import { afterAll, beforeAll, describe, expect, it } from "vitest"
 import { Test, TestingModule } from "@nestjs/testing"
 import { EventSource } from "eventsource"
 import { AppModule } from "src/app.module"
@@ -9,6 +14,9 @@ import EventSSEService from "src/application/services/sse/event/event-sse.servic
 import JwtAuthGuard from "src/common/guards/jwt.guard"
 import MockJwtAuthGuard from "test/mocks/mock-jwt.guard"
 import NotificationEvent from "src/infrastructure/messaging/sse/event/notification/notification.event"
+import { config as dotenvConfig } from "dotenv"
+
+dotenvConfig()
 
 describe("Event SSE E2E Tests", () => {
   let server: INestApplication

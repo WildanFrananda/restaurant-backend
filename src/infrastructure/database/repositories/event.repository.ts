@@ -43,6 +43,10 @@ class EventRepositoryImpl extends EventRepository {
     })
   }
 
+  public override async findAllEvents(): Promise<AppEvent[]> {
+    return await this.eventRepository.findAll()
+  }
+
   public override async findOneEvent(id: string): Promise<AppEvent | null> {
     return await this.eventRepository.findOne({ id })
   }

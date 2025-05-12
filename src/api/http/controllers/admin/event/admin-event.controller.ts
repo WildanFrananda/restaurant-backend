@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Param, Post, Put } from "@nestjs/common"
+import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common"
 import CreateEventDTO from "src/application/dtos/event/create-event.dto"
 import UpdateEventDTO from "src/application/dtos/event/update-event.dto"
 import EventService from "src/application/services/event/event.service"
@@ -9,6 +9,11 @@ import AppEvent from "src/domain/entities/event.entity"
 @Controller("admin/event")
 class AdminEventController {
   constructor(private readonly eventService: EventService) {}
+
+  @Get()
+  public async findAllEvents(): Promise<AppEvent[]> {
+    return await this.eventService.findAllEvents()
+  }
 
   @Post()
   public async createEvent(@Body() dto: CreateEventDTO): Promise<AppEvent> {
