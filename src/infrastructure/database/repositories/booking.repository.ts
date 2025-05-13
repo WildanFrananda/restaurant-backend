@@ -66,7 +66,7 @@ class BookingRepositoryImpl extends BookingRepository {
   public override async filterBookingByConditions(
     conditions: Record<string, unknown>
   ): Promise<Booking[] | null> {
-    return await this.bookingRepository.find(conditions, { populate: ["menu", "table", "chef"] })
+    return await this.bookingRepository.find(conditions, { populate: ["user", "menu", "table", "chef"] })
   }
 
   public override async findUserHistory(
