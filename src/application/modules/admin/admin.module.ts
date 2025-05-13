@@ -7,6 +7,7 @@ import AdminCategoryController from "src/api/http/controllers/admin/menu/admin-c
 import AdminMenuController from "src/api/http/controllers/admin/menu/admin-menu.controller"
 import AdminTableController from "src/api/http/controllers/admin/table/admin-table.controller"
 import AdminUserController from "src/api/http/controllers/admin/user/admin-user.controller"
+import BookingSSEController from "src/api/sse/controllers/booking/booking-sse.controller"
 import ChefGateway from "src/api/websocket/gateways/chef/chef.gateway"
 import WsAdapterHandler from "src/application/handlers/ws-adapter.handler"
 import WsBinary from "src/application/handlers/ws-binary.handler"
@@ -17,6 +18,7 @@ import AdminChefService from "src/application/services/admin/chef/admin-chef.ser
 import AdminCategoryService from "src/application/services/admin/menu/admin-category.service"
 import AdminMenuService from "src/application/services/admin/menu/admin-menu.service"
 import AdminUserService from "src/application/services/admin/user/admin-user.service"
+import BookingSSEService from "src/application/services/sse/booking/booking-sse.service"
 import TableService from "src/application/services/table/table.service"
 import UserProfileService from "src/application/services/user/user.service"
 import WsConfig from "src/common/config/ws-config.type"
@@ -80,6 +82,7 @@ import UserRepositoryImpl from "src/infrastructure/database/repositories/user.re
       provide: WsConfig,
       useValue: DEFAULT_WS_CONFIG
     },
+    BookingSSEService,
     AdminUserService,
     AdminMenuService,
     AdminCategoryService,
@@ -100,7 +103,8 @@ import UserRepositoryImpl from "src/infrastructure/database/repositories/user.re
     AdminCategoryController,
     AdminBookingController,
     AdminTableController,
-    AdminUserController
+    AdminUserController,
+    BookingSSEController
   ]
 })
 export class AdminModule {}
