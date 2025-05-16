@@ -1,4 +1,4 @@
-import { Reference } from "@mikro-orm/core"
+import { Loaded, Reference } from "@mikro-orm/core"
 import { EntityName, InjectRepository } from "@mikro-orm/nestjs"
 import { EntityManager, EntityRepository } from "@mikro-orm/postgresql"
 import { Inject, Injectable } from "@nestjs/common"
@@ -50,6 +50,19 @@ class ReviewRepositoryImpl extends ReviewRepository {
       createdAt: new Date(),
       updatedAt: new Date()
     })
+  }
+
+  public findAllReviews(
+    limit: number,
+    page: number
+  ): Promise<[Loaded<Review, never, "*", never>[], number]> {
+    return this.reviewRepository.findAndCount(
+      {},
+      {
+        limit,
+        offset: (page - 1) * limit
+      }
+    )
   }
 
   public override findOneReviewByBooking(id: string): Promise<Review | null> {

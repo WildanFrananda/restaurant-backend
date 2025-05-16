@@ -17,8 +17,10 @@ class AdminBookingService {
     private readonly chefRepository: ChefRepository
   ) {}
 
-  public async getBookings(dto: FilterBookingDTO): Promise<Booking[] | null> {
-    const { status, type, chefAssigned } = dto
+  public async getBookings(
+    dto: FilterBookingDTO
+  ): Promise<{ data: Booking[]; total: number; page: number; limit: number }> {
+    const { status, type, chefAssigned, limit, page } = dto
     const conditions: Record<string, unknown> = {}
 
     if (status) {
@@ -33,7 +35,13 @@ class AdminBookingService {
       conditions.chef = null
     }
 
-    return await this.bookingRepository.filterBookingByConditions(conditions)
+    const [bookings, total] = await this.bookingRepository.filterBookingByConditions(
+      conditions,
+      limit,
+      page
+    )
+
+    return { data: bookings, total, page, limit }
   }
 
   public async updateBookingStatus(id: string, dto: UpdateBookingStatusDTO): Promise<Booking> {

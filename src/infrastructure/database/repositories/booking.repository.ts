@@ -64,9 +64,16 @@ class BookingRepositoryImpl extends BookingRepository {
   }
 
   public override async filterBookingByConditions(
-    conditions: Record<string, unknown>
-  ): Promise<Booking[] | null> {
-    return await this.bookingRepository.find(conditions, { populate: ["user", "menu", "table", "chef"] })
+    conditions: Record<string, unknown>,
+    limit: number,
+    page: number
+  ): Promise<[Loaded<Booking, "user" | "chef" | "table" | "menu", "*", never>[], number]> {
+    return await this.bookingRepository.findAndCount(conditions, {
+      populate: ["user", "menu", "table", "chef"],
+      orderBy: { createdAt: "DESC" },
+      limit,
+      offset: (page - 1) * limit
+    })
   }
 
   public override async findUserHistory(

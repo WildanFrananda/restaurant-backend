@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req } from "@nestjs/common"
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req } from "@nestjs/common"
 import CreateReviewDTO from "src/application/dtos/review/create-review.dto"
+import GetReviewsDTO from "src/application/dtos/review/get-review.dto"
 import UpdateReviewDto from "src/application/dtos/review/update-review.dto"
 import ReviewService from "src/application/services/review/review.service"
 import AuthenticatedRequest from "src/common/types/user.type"
@@ -19,12 +20,17 @@ class ReviewController {
     return await this.reviewService.createReview(userId, dto)
   }
 
+  @Get()
+  public async getAllReviews(@Query() dto: GetReviewsDTO) {
+    return this.reviewService.getAllReviews(dto)
+  }
+
   @Get(":menuId")
   public async getReviews(@Param("menuId") menuId: string): Promise<Review[]> {
     return this.reviewService.getReviewByMenu(menuId)
   }
 
-  @Get()
+  @Get("user")
   public async getUserReviews(@Req() req: AuthenticatedRequest) {
     return this.reviewService.getUserReviews(req.user.userId)
   }

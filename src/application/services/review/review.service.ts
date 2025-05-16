@@ -5,6 +5,7 @@ import {
   NotFoundException
 } from "@nestjs/common"
 import CreateReviewDTO from "src/application/dtos/review/create-review.dto"
+import GetReviewsDTO from "src/application/dtos/review/get-review.dto"
 import UpdateReviewDto from "src/application/dtos/review/update-review.dto"
 import Review from "src/domain/entities/review.entity"
 import BookingRepository from "src/domain/repositories/booking.repository"
@@ -37,6 +38,15 @@ class ReviewService {
     await this.reviewRepository.persistAndFlush(review)
 
     return review
+  }
+
+  public async getAllReviews(
+    dto: GetReviewsDTO
+  ): Promise<{ data: Review[]; total: number; page: number; limit: number }> {
+    const { page, limit } = dto
+    const [reviews, total] = await this.reviewRepository.findAllReviews(limit, page)
+
+    return { data: reviews, total, page, limit }
   }
 
   public async getUserReviews(userId: string): Promise<Review[]> {

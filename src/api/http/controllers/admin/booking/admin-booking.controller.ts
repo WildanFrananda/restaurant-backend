@@ -12,7 +12,9 @@ class AdminBookingController {
   constructor(private readonly adminBookingService: AdminBookingService) {}
 
   @Get()
-  public async getBookings(@Query() dto: FilterBookingDTO): Promise<Booking[] | null> {
+  public async getBookings(
+    @Query() dto: FilterBookingDTO
+  ): Promise<{ data: Booking[]; total: number; page: number; limit: number }> {
     return await this.adminBookingService.getBookings(dto)
   }
 

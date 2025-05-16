@@ -1,4 +1,4 @@
-import { AnyEntity, EntityManager, Reference } from "@mikro-orm/postgresql"
+import { AnyEntity, EntityManager, Loaded, Reference } from "@mikro-orm/postgresql"
 import Review from "../entities/review.entity"
 import Menu from "../entities/menu.entity"
 import User from "../entities/user.entity"
@@ -18,6 +18,10 @@ abstract class ReviewRepository {
     rating: number,
     comment?: string
   ): Review
+  public abstract findAllReviews(
+    limit: number,
+    page: number
+  ): Promise<[Loaded<Review, never, "*", never>[], number]>
   public abstract findOneReviewByBooking(id: string): Promise<Review | null>
   public abstract findReviewByMenu(menuId: string): Promise<Review[]>
   public abstract findUserReviews(userId: string): Promise<Review[]>

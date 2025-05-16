@@ -28,8 +28,10 @@ abstract class BookingRepository {
   public abstract filterBookingById(id: string): Promise<Booking | null>
   public abstract findBookingById(id: string): Promise<Booking | null>
   public abstract filterBookingByConditions(
-    conditions: Record<string, unknown>
-  ): Promise<Booking[] | null>
+    conditions: Record<string, unknown>,
+    limit: number,
+    page: number
+  ): Promise<[Loaded<Booking, "user" | "chef" | "table" | "menu", "*", never>[], number]>
   public abstract reference(id: string): Booking
 }
 

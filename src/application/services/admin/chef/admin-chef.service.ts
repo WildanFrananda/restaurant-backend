@@ -1,5 +1,6 @@
-import { Injectable, NotFoundException } from "@nestjs/common"
+import { Injectable, NotFoundException, Query } from "@nestjs/common"
 import CreateChefDTO from "src/application/dtos/chef/create-chef.dto"
+import GetChefsDTO from "src/application/dtos/chef/get-chefs.dto"
 import UpdateChefDTO from "src/application/dtos/chef/update-chef.dto"
 import Chef from "src/domain/entities/chef.entity"
 import ChefRepository from "src/domain/repositories/chef.repository"
@@ -8,8 +9,17 @@ import ChefRepository from "src/domain/repositories/chef.repository"
 class AdminChefService {
   constructor(private readonly chefRepository: ChefRepository) {}
 
-  public async getChefs(): Promise<Chef[]> {
-    return await this.chefRepository.findAllChef()
+  public async getChefs(dto: GetChefsDTO): Promise<{
+    chefs: Chef[]
+    total: number
+    page: number
+    limit: number
+  }> {
+    const { page, limit } = dto
+
+    const [chefs, total] = await this.chefRepository.findAllChef(page, limit)
+
+    return { chefs, total, page, limit }
   }
 
   public async createChef(dto: CreateChefDTO): Promise<Chef> {

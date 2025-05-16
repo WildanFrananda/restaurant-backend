@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common"
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from "@nestjs/common"
 import CreateChefDTO from "src/application/dtos/chef/create-chef.dto"
+import GetChefsDTO from "src/application/dtos/chef/get-chefs.dto"
 import UpdateCategoryDto from "src/application/dtos/menu/update-category.dto"
 import AdminChefService from "src/application/services/admin/chef/admin-chef.service"
 import Admin from "src/common/decorators/admin.decorator"
@@ -11,8 +12,13 @@ class AdminChefController {
   constructor(private readonly adminChefService: AdminChefService) {}
 
   @Get()
-  public async getChefs(): Promise<Chef[]> {
-    return await this.adminChefService.getChefs()
+  public async getChefs(@Query() dto: GetChefsDTO): Promise<{
+    chefs: Chef[]
+    total: number
+    page: number
+    limit: number
+  }> {
+    return await this.adminChefService.getChefs(dto)
   }
 
   @Post()

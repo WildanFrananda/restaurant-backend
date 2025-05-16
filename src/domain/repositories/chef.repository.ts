@@ -1,4 +1,4 @@
-import { AnyEntity, Reference } from "@mikro-orm/postgresql"
+import { AnyEntity, Loaded, Reference } from "@mikro-orm/postgresql"
 import Chef from "../entities/chef.entity"
 import ChefStatus from "../enums/chef-status.enum"
 
@@ -9,7 +9,10 @@ abstract class ChefRepository {
   public abstract removeAndFlush(
     data: AnyEntity | Reference<AnyEntity> | Iterable<AnyEntity | Reference<AnyEntity>>
   ): Promise<void>
-  public abstract findAllChef(): Promise<Chef[]>
+  public abstract findAllChef(
+    limit: number,
+    page: number
+  ): Promise<[Loaded<Chef, never, "*", never>[], number]>
   public abstract createChef(
     name: string,
     experience: string,
