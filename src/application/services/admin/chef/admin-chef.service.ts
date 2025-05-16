@@ -15,8 +15,8 @@ class AdminChefService {
     page: number
     limit: number
   }> {
-    const { page, limit } = dto
-
+    const page = dto.page || 1
+    const limit = dto.limit || 10
     const [chefs, total] = await this.chefRepository.findAllChef(page, limit)
 
     return { chefs, total, page, limit }

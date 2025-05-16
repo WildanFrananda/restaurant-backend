@@ -43,7 +43,8 @@ class ReviewService {
   public async getAllReviews(
     dto: GetReviewsDTO
   ): Promise<{ data: Review[]; total: number; page: number; limit: number }> {
-    const { page, limit } = dto
+    const page = dto.page || 1
+    const limit = dto.limit || 10
     const [reviews, total] = await this.reviewRepository.findAllReviews(limit, page)
 
     return { data: reviews, total, page, limit }

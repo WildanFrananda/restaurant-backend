@@ -21,7 +21,9 @@ class ReviewController {
   }
 
   @Get()
-  public async getAllReviews(@Query() dto: GetReviewsDTO) {
+  public async getAllReviews(
+    @Query() dto: GetReviewsDTO
+  ): Promise<{ data: Review[]; total: number; page: number; limit: number }> {
     return this.reviewService.getAllReviews(dto)
   }
 

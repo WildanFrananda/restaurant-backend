@@ -20,7 +20,9 @@ class AdminBookingService {
   public async getBookings(
     dto: FilterBookingDTO
   ): Promise<{ data: Booking[]; total: number; page: number; limit: number }> {
-    const { status, type, chefAssigned, limit, page } = dto
+    const { status, type, chefAssigned } = dto
+    const page = dto.page || 1
+    const limit = dto.limit || 10
     const conditions: Record<string, unknown> = {}
 
     if (status) {
