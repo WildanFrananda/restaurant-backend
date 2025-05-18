@@ -30,18 +30,8 @@ class ChefRepositoryImpl extends ChefRepository {
     await this.em.removeAndFlush(data)
   }
 
-  public override async findAllChef(
-    limit: number,
-    page: number
-  ): Promise<[Loaded<Chef, never, "*", never>[], number]> {
-    return await this.chefRepository.findAndCount(
-      {},
-      {
-        limit,
-        offset: (page - 1) * limit,
-        orderBy: { name: "ASC" }
-      }
-    )
+  public override async findAllChef(): Promise<Chef[]> {
+    return await this.chefRepository.findAll()
   }
 
   public override async createChef(

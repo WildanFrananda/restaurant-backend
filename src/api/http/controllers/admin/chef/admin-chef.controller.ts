@@ -12,13 +12,8 @@ class AdminChefController {
   constructor(private readonly adminChefService: AdminChefService) {}
 
   @Get()
-  public async getChefs(@Query() dto: GetChefsDTO): Promise<{
-    chefs: Chef[]
-    total: number
-    page: number
-    limit: number
-  }> {
-    return await this.adminChefService.getChefs(dto)
+  public async getChefs(): Promise<Chef[]> {
+    return await this.adminChefService.getChefs()
   }
 
   @Post()

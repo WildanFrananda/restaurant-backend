@@ -9,10 +9,7 @@ abstract class ChefRepository {
   public abstract removeAndFlush(
     data: AnyEntity | Reference<AnyEntity> | Iterable<AnyEntity | Reference<AnyEntity>>
   ): Promise<void>
-  public abstract findAllChef(
-    limit: number,
-    page: number
-  ): Promise<[Loaded<Chef, never, "*", never>[], number]>
+  public abstract findAllChef(): Promise<Chef[]>
   public abstract createChef(
     name: string,
     experience: string,

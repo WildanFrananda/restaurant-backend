@@ -9,17 +9,8 @@ import ChefRepository from "src/domain/repositories/chef.repository"
 class AdminChefService {
   constructor(private readonly chefRepository: ChefRepository) {}
 
-  public async getChefs(dto: GetChefsDTO): Promise<{
-    chefs: Chef[]
-    total: number
-    page: number
-    limit: number
-  }> {
-    const page = dto.page || 1
-    const limit = dto.limit || 10
-    const [chefs, total] = await this.chefRepository.findAllChef(page, limit)
-
-    return { chefs, total, page, limit }
+  public async getChefs(): Promise<Chef[]> {
+    return await this.chefRepository.findAllChef()
   }
 
   public async createChef(dto: CreateChefDTO): Promise<Chef> {
