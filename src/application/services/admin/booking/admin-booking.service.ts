@@ -77,6 +77,7 @@ class AdminBookingService {
 
     booking.chef = chef
     booking.status = BookingStatus.CONFIRMED
+    chef.status = ChefStatus.BOOKED
 
     this.chefGateway.updateChefStatus(chefId, ChefStatus.BOOKED)
 

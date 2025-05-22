@@ -2,7 +2,7 @@ import type AuthenticatedRequest from "src/common/types/user.type"
 import type UpdateProfileDto from "src/application/dtos/user/user-profile.dto"
 import type User from "src/domain/entities/user.entity"
 import type UserProfile from "src/domain/entities/user-profile.entity"
-import { Controller, Get, Put, Body, Req } from "@nestjs/common"
+import { Controller, Get, Put, Body, Req, Param } from "@nestjs/common"
 import UserProfileService from "src/application/services/user/user.service"
 
 @Controller("user")
@@ -17,14 +17,12 @@ class UserProfileController {
     return user
   }
 
-  @Put("profile")
+  @Put("profile/:id")
   public async updateProfile(
-    @Req() req: AuthenticatedRequest,
+    @Param("id") id: string,
     @Body() updateDto: UpdateProfileDto
   ): Promise<UserProfile> {
-    const { userId } = req.user
-
-    return await this.userProfileService.updateProfile(userId, updateDto)
+    return await this.userProfileService.updateProfile(id, updateDto)
   }
 
   @Get("wallet")
