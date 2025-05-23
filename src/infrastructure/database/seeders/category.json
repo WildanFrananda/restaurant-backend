@@ -1,0 +1,20 @@
+[
+    {
+        "id": "27998946-d5f9-4437-9279-ec86c62792e1",
+        "name": "Main Dish",
+        "description": "Aneka hidangan utama, termasuk Wagyu dan hidangan laut segar.",
+        "imageUrl": "https://picsum.photos/seed/mrcWoh4yl0/1462/3968"
+    },
+    {
+        "id": "6e343e6d-9011-4c81-8838-af41049789fd",
+        "name": "Desserts",
+        "description": "Pilihan hidangan penutup manis seperti melon dan es krim.",
+        "imageUrl": "https://picsum.photos/seed/y6lUky8U/3322/3"
+    },
+    {
+        "id": "d09352ed-31ca-49ee-ba1a-62b4d02f9530",
+        "name": "Drinks",
+        "description": "Beragam minuman segar, dari squash hingga teh.",
+        "imageUrl": "https://picsum.photos/seed/dOPEsA4pyz/2276/1244"
+    }
+]

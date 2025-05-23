@@ -1,0 +1,164 @@
+{
+  "data": [
+    {
+      "id": "e771df3a-5ddb-496a-b423-0532e25e1711",
+      "name": "YAWARA Kuroge Yukhoe Japanese Beef Tartare",
+      "description": "Daging sapi Wagyu Jepang (Kuroge) mentah yang super lembut, dicincang halus dan dibumbui khas Jepang. Biasanya disajikan dengan kuning telur di atasnya.",
+      "price": 230.0,
+      "category": "27998946-d5f9-4437-9279-ec86c62792e1",
+      "isTopWeek": false,
+      "status": "available",
+      "imageUrl": "https://drive.google.com/uc?export=view&id=1yvHLrU_OAagF_u4To_Mmyty8qpCotgJl"
+    },
+    {
+      "id": "e771df3a-5ddb-496a-b423-0532e25e1713",
+      "name": "Assorted Sashimi",
+      "description": "Beberapa jenis irisan ikan laut segar pilihan yang disajikan mentah.",
+      "price": 550.0,
+      "category": "27998946-d5f9-4437-9279-ec86c62792e1",
+      "isTopWeek": false,
+      "status": "available",
+      "imageUrl": "https://drive.google.com/uc?export=view&id=1iyydjOXmQypB1SLfONiZSvVMbJvAobbR"
+    },
+    {
+      "id": "e771df3a-5ddb-496a-b423-0532e25e1714",
+      "name": "Assorted Sushi",
+      "description": "Macam-macam sushi dalam satu piring. Ada nasi dengan ikan di atasnya (nigiri) dan sushi gulung (maki).",
+      "price": 550.0,
+      "category": "27998946-d5f9-4437-9279-ec86c62792e1",
+      "isTopWeek": false,
+      "status": "available",
+      "imageUrl": "https://drive.google.com/uc?export=view&id=1UBxpxwFZDJOXEESZwolFyzXk1IxdI4l4"
+    },
+    {
+      "id": "e771df3a-5ddb-496a-b423-0532e25e1715",
+      "name": "Live Baby Lobster Sashimi",
+      "description": "Daging lobster bayi yang masih sangat segar, disajikan mentah. Rasanya manis dan teksturnya kenyal.",
+      "price": 225.0,
+      "category": "27998946-d5f9-4437-9279-ec86c62792e1",
+      "isTopWeek": false,
+      "status": "available",
+      "imageUrl": "https://drive.google.com/uc?export=view&id=10zHZEr88Yr1VBLjJ_oeHOpOCUN84NbH6"
+    },
+    {
+      "id": "e771df3a-5ddb-496a-b423-0532e25e1716",
+      "name": "Prime Kuroge Tan Steak",
+      "description": "hidangan istimewa berupa potongan lidah sapi hitam Jepang (Kuroge Wagyu) pilihan yang dipanggang sempurna..",
+      "price": 800.0,
+      "category": "27998946-d5f9-4437-9279-ec86c62792e1",
+      "isTopWeek": false,
+      "status": "available",
+      "imageUrl": "https://drive.google.com/uc?export=view&id=1nH0xQYJYNNwSgADBWHxpfPMPv2oiK6Zl"
+    },
+    {
+      "id": "e771df3a-5ddb-496a-b423-0532e25e1717",
+      "name": "Aust. Wagyu Misuji",
+      "description": "Daging Wagyu Australia bagian Misuji (sering disebut oyster blade). Sangat empuk dan cocok untuk dibakar.",
+      "price": 360.0,
+      "category": "27998946-d5f9-4437-9279-ec86c62792e1",
+      "isTopWeek": false,
+      "status": "available",
+      "imageUrl": "https://drive.google.com/uc?export=view&id=1DVR83x6nLq0PNdrBg_0JYHJta7_SVjnH"
+    },
+    {
+      "id": "e771df3a-5ddb-496a-b423-0532e25e1718",
+      "name": "US Wagyu Karubi",
+      "description": "Daging Wagyu Amerika bagian Karubi (sekitar iga). Banyak lemaknya, jadi gurih dan juicy saat dibakar.",
+      "price": 200.0,
+      "category": "27998946-d5f9-4437-9279-ec86c62792e1",
+      "isTopWeek": false,
+      "status": "available",
+      "imageUrl": "https://drive.google.com/uc?export=view&id=1PIL7hokvMxa4C1L8_DOp8eqy432ZpN1a"
+    },
+    {
+      "id": "e771df3a-5ddb-496a-b423-0532e25e1719",
+      "name": "Japanese Melon",
+      "description": "Potongan buah melon Jepang asli yang terkenal sangat manis, berair, dan segar.",
+      "price": 400.0,
+      "category": "6e343e6d-9011-4c81-8838-af41049789fd",
+      "isTopWeek": false,
+      "status": "available",
+      "imageUrl": "https://drive.google.com/uc?export=view&id=1McAPOSd-RPqp-18CLdbWVWuyg9m-Gb-w"
+    },
+    {
+      "id": "e771df3a-5ddb-496a-b423-0532e25e1720",
+      "name": "Homemade Ice Cream",
+      "description": "Es krim lembut buatan sendiri. Pilih rasa: Milk, Matcha, dan Ogura",
+      "price": 40.0,
+      "category": "6e343e6d-9011-4c81-8838-af41049789fd",
+      "isTopWeek": false,
+      "status": "available",
+      "imageUrl": "https://drive.google.com/uc?export=view&id=1C_FG4PW2MPe5C0RTeIS7e5jbEESubEDV"
+    },
+    {
+      "id": "e771df3a-5ddb-496a-b423-0532e25e1721",
+      "name": "Homemade Caramel Pudding",
+      "description": "Puding lembut klasik buatan sendiri dengan saus karamel manis di atasnya.",
+      "price": 50.0,
+      "category": "6e343e6d-9011-4c81-8838-af41049789fd",
+      "isTopWeek": false,
+      "status": "available",
+      "imageUrl": "https://drive.google.com/uc?export=view&id=1tPp01ZqUGTIQiMW7_zG1icRUmhRs-rTK"
+    },
+    {
+      "id": "e771df3a-5ddb-496a-b423-0532e25e1722",
+      "name": "Lemon Squash",
+      "description": "Minuman lemon dingin yang menyegarkan dengan sentuhan soda.",
+      "price": 35.0,
+      "category": "d09352ed-31ca-49ee-ba1a-62b4d02f9530",
+      "isTopWeek": false,
+      "status": "available",
+      "imageUrl": "https://drive.google.com/uc?export=view&id=1CdesbfPJ4QR99D956_8mcRRTFG6zYDVX"
+    },
+    {
+      "id": "e771df3a-5ddb-496a-b423-0532e25e1723",
+      "name": "Orange",
+      "description": "Kesegaran alami buah lemon.",
+      "price": 90.0,
+      "category": "d09352ed-31ca-49ee-ba1a-62b4d02f9530",
+      "isTopWeek": false,
+      "status": "available",
+      "imageUrl": "https://drive.google.com/uc?export=view&id=1CdesbfPJ4QR99D956_8mcRRTFG6zYDVX"
+    },
+    {
+      "id": "e771df3a-5ddb-496a-b423-0532e25e1724",
+      "name": "Lemon",
+      "description": "Kesegaran alami buah lemon.",
+      "price": 40.0,
+      "category": "d09352ed-31ca-49ee-ba1a-62b4d02f9530",
+      "isTopWeek": false,
+      "status": "available",
+      "imageUrl": "https://drive.google.com/uc?export=view&id=1CdesbfPJ4QR99D956_8mcRRTFG6zYDVX"
+    },
+    {
+      "id": "e771df3a-5ddb-496a-b423-0532e25e1725",
+      "name": "Lemon Tea (Hot/Iced) ",
+      "description": "Kombinasi teh dengan kesegaran lemon, tersedia hangat atau dingin.",
+      "price": 25.0,
+      "category": "d09352ed-31ca-49ee-ba1a-62b4d02f9530",
+      "isTopWeek": true,
+      "status": "available",
+      "imageUrl": "https://drive.google.com/uc?export=view&id=1CdesbfPJ4QR99D956_8mcRRTFG6zYDVX"
+    },
+    {
+      "id": "e771df3a-5ddb-496a-b423-0532e25e1726",
+      "name": "Japanese Ocha (Hot/Iced) ",
+      "description": "Teh hijau Jepang otentik, disajikan hangat atau dingin.",
+      "price": 20.0,
+      "category": "d09352ed-31ca-49ee-ba1a-62b4d02f9530",
+      "isTopWeek": false,
+      "status": "available",
+      "imageUrl": "https://drive.google.com/uc?export=view&id=1CdesbfPJ4QR99D956_8mcRRTFG6zYDVX"
+    },
+    {
+      "id": "e771df3a-5ddb-496a-b423-0532e25e1727",
+      "name": "Tea (Hot/Iced) ",
+      "description": "Pilihan teh klasik, bisa dinikmati hangat atau dingin.",
+      "price": 20.0,
+      "category": "d09352ed-31ca-49ee-ba1a-62b4d02f9530",
+      "isTopWeek": false,
+      "status": "available",
+      "imageUrl": "https://drive.google.com/uc?export=view&id=1CdesbfPJ4QR99D956_8mcRRTFG6zYDVX"
+    }
+  ]
+}

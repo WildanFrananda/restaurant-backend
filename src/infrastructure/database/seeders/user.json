@@ -1,0 +1,62 @@
+[
+    {
+        "id": "013a782f-cd8d-42e2-9e42-f95dc526a973",
+        "email": "chef@staff.com",
+        "password": "chef",
+        "googleId": "224d34c6-84d6-451f-a601-55de7e6fe6b2",
+        "isVerified": true,
+        "role": "staff",
+        "createdAt": "2024-10-23T14:39:52.720Z",
+        "profile": "2e4220ab-bf71-4e00-a621-e4380c44767b"
+    },
+    {
+        "id": "117fd3eb-a962-4b14-a3ce-e089183c873a",
+        "email": "wildanrailfanskrl@gmail.com",
+        "password": "user123",
+        "googleId": null,
+        "isVerified": true,
+        "role": "user",
+        "createdAt": "2025-05-07T09:30:51.587Z",
+        "profile": "117fd3eb-a962-4b14-a3ce-e089183c873a"
+    },
+    {
+        "id": "b0b17eda-5f15-4e77-9369-a83c4467e79d",
+        "email": "wildanrailfanskrd@gmail.com",
+        "password": "user123",
+        "googleId": null,
+        "isVerified": true,
+        "role": "user",
+        "createdAt": "2025-05-18T13:24:53.704Z",
+        "profile": "b0b17eda-5f15-4e77-9369-a83c4467e712"
+    },
+    {
+        "id": "b0b17eda-5f15-4e77-9369-a83c4467e79d",
+        "email": "user@user.com",
+        "password": "user123",
+        "googleId": null,
+        "isVerified": true,
+        "role": "user",
+        "createdAt": "2025-05-18T13:24:53.704Z",
+        "profile": "b0b17eda-5f15-4e77-9369-a83c4467e79d"
+    },
+    {
+        "id": "a08d800c-1539-45fe-b27b-dbb624969a08",
+        "email": "wildanfrananda@fullstack.dev",
+        "password": "admin",
+        "googleId": null,
+        "isVerified": true,
+        "role": "admin",
+        "createdAt": "2024-10-02T02:56:23.529Z",
+        "profile": "43226d9b-4893-4af9-8d09-c821330ddac5"
+    },
+    {
+        "id": "a08d800c-1539-45fe-b27b-dbb624969a08",
+        "email": "admin@yawara.com",
+        "password": "admin",
+        "googleId": null,
+        "isVerified": true,
+        "role": "admin",
+        "createdAt": "2024-10-02T02:56:23.529Z",
+        "profile": "43226d9b-4893-4af9-8d09-c821330dda12"
+    }
+]

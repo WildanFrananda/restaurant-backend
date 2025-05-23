@@ -5,22 +5,23 @@ import Menu from "../../../domain/entities/menu.entity"
 import User from "../../../domain/entities/user.entity"
 import Booking from "../../../domain/entities/booking.entity"
 import ReviewFactory from "./factory/review.factory"
+import path from "path"
+import fs from "fs"
+import Review from "src/domain/entities/review.entity"
 
 class ReviewSeeder extends Seeder {
   public override async run(em: EntityManager): Promise<void> {
-    const users = await em.find(User, {})
-    const menus = await em.find(Menu, {})
-    const booking = await em.find(Booking, {})
+    const filePath = path.resolve(__dirname, "review.json")
+    const rawData = fs.readFileSync(filePath, "utf-8")
+    const parsedData: { data: Review[] } = JSON.parse(rawData)
+    const reviews: Review[] = parsedData.data
 
-    const shuffledBooking = faker.helpers.shuffle(booking).slice(0, 80)
-
-    for (const booking of shuffledBooking) {
-      await new ReviewFactory(em).create(1, {
-        user: faker.helpers.arrayElement(users),
-        menu: faker.helpers.arrayElement(menus),
-        booking: booking
-      })
+    for (const reviewsData of reviews) {
+      const review = em.create(Review, reviewsData)
+      em.persist(review)
     }
+
+    await em.flush()
   }
 }
 

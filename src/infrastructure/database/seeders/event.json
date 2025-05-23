@@ -1,0 +1,30 @@
+[
+    {
+        "id": "6da1d96a-6c7e-4413-9b90-18c81ffb8682",
+        "name": "Ramadhan Delight",
+        "description": "🔥 Ramadhan Delight at Yawara 🔥 Break your fast in style with the finest melt-in-your-mouth cuts, grilled to perfection. 🍽️✨ Elevate your Iftar experience with premium flavors and an unforgettable dining moment.",
+        "isPopup": true,
+        "imageUrl": "https://drive.google.com/file/d/1mE9z-JOKJuYsPj9azMLad22r9QgE4lR-/view?usp=drive_link"
+    },
+    {
+        "id": "3b5f59a7-e349-493d-9ac0-ec9c31d1dfa9",
+        "name": "Iftar Omakase",
+        "description": "✨ Experience the elegance of Japanese Omakase dining this Ramadan with Yawara Home Service! ✨ Our master chefs bring fresh, premium ingredients to your table, crafting each dish with precision and passion. 🍣🔥 Enjoy a touch of Japanese sophistication blended with Indonesian Ramadan traditions, complete with complimentary tajil & traditional tea. 🌙🍵",
+        "isPopup": true,
+        "imageUrl": "https://drive.google.com/file/d/1zAeh5px8u9Pk41Y6zKcB6nZQVPEHMYbb/view?usp=drive_link"
+    },
+    {
+        "id": "d50bd574-519c-49af-9cdc-7f574691d3c2",
+        "name": "Eid Mubarak!",
+        "description": "Eid Mubarak! 🌙✨ May this special occasion bring you peace, joy, and cherished moments with your loved ones. In celebration of Eid, we will be closed on March 31 & April 1 and will reopen soon to welcome you back. Wishing you a beautiful holiday filled with warmth and happiness. 🍽️🤍",
+        "isPopup": true,
+        "imageUrl": "https://drive.google.com/file/d/1wPatzjKnFbnWidtTV4qgL6kv_DVcnAnF/view?usp=drive_link"
+    },
+    {
+        "id": "d50bd574-519c-49af-9cdc-7f574691d3c2",
+        "name": "Happy Easter",
+        "description": "Easter in Bloom: Savor the season with every bite. Here, tradition meets the vibrant freshness of spring, offering a culinary celebration where comforting flavors harmonize with nature's renewal. Enjoy dishes that embody the gentle rebirth of the season.",
+        "isPopup": false,
+        "imageUrl": ""
+    }
+]

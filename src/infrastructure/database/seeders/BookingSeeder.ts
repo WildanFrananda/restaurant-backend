@@ -6,20 +6,23 @@ import Menu from "../../../domain/entities/menu.entity"
 import Table from "../../../domain/entities/table.entity"
 import User from "../../../domain/entities/user.entity"
 import BookingFactory from "./factory/booking.factory"
+import path from "path"
+import fs from "fs"
+import Booking from "../../../domain/entities/booking.entity"
 
 class BookingSeeder extends Seeder {
   public override async run(em: EntityManager): Promise<void> {
-    const users = await em.find(User, {})
-    const menus = await em.find(Menu, {})
-    const chefs = await em.find(Chef, {})
-    const tables = await em.find(Table, {})
+    const filePath = path.resolve(__dirname, "bookings.json")
+    const rawData = fs.readFileSync(filePath, "utf-8")
+    const parsedData: { data: Booking[] } = JSON.parse(rawData)
+    const bookings: Booking[] = parsedData.data
 
-    await new BookingFactory(em).create(100, {
-      user: faker.helpers.arrayElement(users),
-      menu: Math.random() > 0.2 ? faker.helpers.arrayElement(menus) : null,
-      chef: Math.random() > 0.3 ? faker.helpers.arrayElement(chefs) : null,
-      table: Math.random() > 0.5 ? faker.helpers.arrayElement(tables) : null
-    })
+    for (const bookingsData of bookings) {
+      const booking = em.create(Booking, bookingsData)
+      em.persist(booking)
+    }
+
+    await em.flush()
   }
 }
 

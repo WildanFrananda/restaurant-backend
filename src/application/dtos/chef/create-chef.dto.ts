@@ -8,7 +8,7 @@ class CreateChefDTO {
 
   @IsNotEmpty()
   @IsString()
-  experiences!: string
+  experience!: string
 
   @IsNotEmpty()
   @IsEnum(ChefStatus)

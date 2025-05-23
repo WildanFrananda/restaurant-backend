@@ -1,0 +1,122 @@
+[
+    {
+        "id": "4cc6a86a-32e3-406c-b452-82759a2b4af3",
+        "tableNumber": "1",
+        "capacity": 10,
+        "status": "available"
+    },
+    {
+        "id": "b4e3d0e6-fc19-4cc4-a985-2b66cdd5982f",
+        "tableNumber": "2",
+        "capacity": 10,
+        "status": "available"
+    },
+    {
+        "id": "12b430a4-fe94-45f5-a448-59c5e5a7f954",
+        "tableNumber": "3",
+        "capacity": 2,
+        "status": "available"
+    },
+    {
+        "id": "29617488-80c6-4b5c-b159-d89a32c86ada",
+        "tableNumber": "4",
+        "capacity": 4,
+        "status": "available"
+    },
+    {
+        "id": "4a0a10cb-6b5f-4ecc-8515-f346145ca549",
+        "tableNumber": "5",
+        "capacity": 8,
+        "status": "available"
+    },
+    {
+        "id": "767c1667-298b-49ae-ab16-3f916b359413",
+        "tableNumber": "6",
+        "capacity": 2,
+        "status": "available"
+    },
+    {
+        "id": "ae47803a-0b10-4f8d-8166-1d067b6902c6",
+        "tableNumber": "7",
+        "capacity": 7,
+        "status": "available"
+    },
+    {
+        "id": "42e4ca9c-822d-4f3a-89fa-ecb729fb2c84",
+        "tableNumber": "8",
+        "capacity": 8,
+        "status": "available"
+    },
+    {
+        "id": "a423a2e1-b5cd-4c6d-b0f1-84c42a3b6368",
+        "tableNumber": "9",
+        "capacity": 9,
+        "status": "available"
+    },
+    {
+        "id": "aa1f9811-211b-4578-9d09-4e3038f2e0fd",
+        "tableNumber": "9",
+        "capacity": 4,
+        "status": "available"
+    },
+    {
+        "id": "1199ca1d-d2c7-4a21-a820-9d1ae07dc296",
+        "tableNumber": "10",
+        "capacity": 9,
+        "status": "available"
+    },
+    {
+        "id": "2576c9b6-ebc4-49d4-992c-661cfb5deca5",
+        "tableNumber": "11",
+        "capacity": 8,
+        "status": "available"
+    },
+    {
+        "id": "790d9d52-6c43-484d-b097-fb954988bf6f",
+        "tableNumber": "12",
+        "capacity": 9,
+        "status": "available"
+    },
+    {
+        "id": "9debbf10-da07-42cb-b649-f1c7a88bf4e4",
+        "tableNumber": "13",
+        "capacity": 8,
+        "status": "available"
+    },
+    {
+        "id": "93aafea1-5a45-4d4b-9395-992fe534afd1",
+        "tableNumber": "14",
+        "capacity": 6,
+        "status": "available"
+    },
+    {
+        "id": "e59af53c-3128-4d07-9f9e-eda225333a2d",
+        "tableNumber": "15",
+        "capacity": 7,
+        "status": "available"
+    },
+    {
+        "id": "f49552b8-a84e-47aa-88b4-c7d85e4a89f5",
+        "tableNumber": "16",
+        "capacity": 9,
+        "status": "available"
+    },
+    {
+        "id": "76e7f98d-87f3-4363-8f57-7bce6965deca",
+        "tableNumber": "17",
+        "capacity": 7,
+        "status": "available"
+    },
+    {
+        "id": "b989c00d-31bb-4e3b-b376-ef5540b5b9b3",
+        "tableNumber": "18",
+        "capacity": 3,
+        "status": "available"
+    },
+    {
+        "id": "799d878d-ebd9-4a78-bcb6-99e2e24f99bb",
+        "tableNumber": "19",
+        "capacity": 2,
+        "status": "available"
+    }
+]

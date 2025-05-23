@@ -21,7 +21,7 @@ abstract class ReviewRepository {
   public abstract findAllReviews(
     limit: number,
     page: number
-  ): Promise<[Loaded<Review, never, "*", never>[], number]>
+  ): Promise<[Loaded<Review, "user" | "menu", "*", never>[], number]>
   public abstract findOneReviewByBooking(id: string): Promise<Review | null>
   public abstract findReviewByMenu(menuId: string): Promise<Review[]>
   public abstract findUserReviews(userId: string): Promise<Review[]>

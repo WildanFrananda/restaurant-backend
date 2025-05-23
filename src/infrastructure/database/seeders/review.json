@@ -1,0 +1,24 @@
+{
+    "data": [
+        {
+            "id": "5e08d3dc-2b29-4e09-96a8-a83f8297b751",
+            "user": "b0b17eda-5f15-4e77-9369-a83c4467e79d",
+            "menu": "e771df3a-5ddb-496a-b423-0532e25e1711",
+            "booking": "00009cd3-72ad-4898-a1cc-b74bf016c97b",
+            "rating": 5,
+            "comment": "good",
+            "createdAt": "2025-05-07T09:35:39.879Z",
+            "updatedAt": "2025-05-07T09:35:39.879Z"
+        },
+        {
+            "id": "2a869231-e4d5-487e-afa4-957bd22a48b6",
+            "user": "b0b17eda-5f15-4e77-9369-a83c4467e79d",
+            "menu": "e771df3a-5ddb-496a-b423-0532e25e1711",
+            "booking": "49c5f372-875f-4453-8c7e-fa3b56313a26",
+            "rating": 4,
+            "comment": "enak sekali, jadi ingin datang lagi",
+            "createdAt": "2025-05-07T07:35:39.178Z",
+            "updatedAt": "2025-05-06T22:35:19.267Z"
+        }
+    ]
+}

@@ -14,9 +14,9 @@ class AdminChefService {
   }
 
   public async createChef(dto: CreateChefDTO): Promise<Chef> {
-    const { name, experiences, status, imageUrl } = dto
+    const { name, experience, status, imageUrl } = dto
 
-    const chef = await this.chefRepository.createChef(name, experiences, status, imageUrl)
+    const chef = await this.chefRepository.createChef(name, experience, status, imageUrl)
 
     return chef
   }

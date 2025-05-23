@@ -1,0 +1,37 @@
+[
+    {
+        "id": "43dfa754-7007-4a5e-b411-3d6f88c11a50",
+        "name": "Chef Waso",
+        "experience": "dikenal sebagai master hidangan tradisional Jepang dengan sentuhan modern yang artistik.",
+        "status": "available",
+        "imageUrl": "https://drive.google.com/uc?export=view&id=1u9IUEu42DNw_KcvaBmmcosVINY6DJky-"
+    },
+    {
+        "id": "ffb3ba66-3cfd-444c-b801-a91f484e09da",
+        "name": "Chef Hiroyasu",
+        "experience": "Sushi dan sashimi inovatif dengan teknik edomae.",
+        "status": "available",
+        "imageUrl": "https://drive.google.com/uc?export=view&id=1yBheTPvJMV5UDGSD6rozya5K6gQGlawT"
+    },
+    {
+        "id": "afa09c82-871b-42e3-b8f9-5dcbddcd60cc",
+        "name": "Chef Yuki",
+        "experience": "Izakaya kontemporer, terutama yakitori dan robatayaki.",
+        "status": "available",
+        "imageUrl": "https://drive.google.com/uc?export=view&id=1ecWh4AzgNKLBidnXV7z4deNZIO4BMwhd"
+    },
+    {
+        "id": "354d9317-0c77-43db-9e6b-893452d427a7",
+        "name": "Chef Oinuma",
+        "experience": "Masakan teppanyaki dan hibachi dengan pertunjukan.",
+        "status": "available",
+        "imageUrl": "https://drive.google.com/uc?export=view&id=1yQep-G-kDbUo3akFZHLH6etIs_vYDgqW"
+    },
+    {
+        "id": "b9d06348-9f07-4cba-97d5-6829425ccc24",
+        "name": "Chef Kazuhiro",
+        "experience": "Kaiseki Ryori dan masakan vegetarian Jepang yang elegan.",
+        "status": "available",
+        "imageUrl": "https://drive.google.com/uc?export=view&id=1Qr0wBQAI4GNrVeJQoYi7zYthc8NOrVSu"
+    }
+]

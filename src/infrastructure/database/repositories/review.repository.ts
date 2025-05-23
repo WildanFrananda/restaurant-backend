@@ -55,12 +55,14 @@ class ReviewRepositoryImpl extends ReviewRepository {
   public findAllReviews(
     limit: number,
     page: number
-  ): Promise<[Loaded<Review, never, "*", never>[], number]> {
+  ) {
     return this.reviewRepository.findAndCount(
       {},
       {
         limit,
-        offset: (page - 1) * limit
+        offset: (page - 1) * limit,
+        populate: ["user.profile", "menu"],
+        orderBy: { createdAt: "DESC" }
       }
     )
   }
@@ -81,7 +83,7 @@ class ReviewRepositoryImpl extends ReviewRepository {
   }
 
   public override async findOneReviewById(id: string): Promise<Review | null> {
-    return await this.reviewRepository.findOne({ id }, { populate: ["user"] })
+    return await this.reviewRepository.findOne({ id }, { populate: ["user.profile"] })
   }
 
   public override getEntity(): EntityManager {
