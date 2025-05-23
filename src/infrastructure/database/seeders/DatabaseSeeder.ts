@@ -9,6 +9,7 @@ import MenuSeeder from "./MenuSeeder"
 import BookingSeeder from "./BookingSeeder"
 import TransactionSeeder from "./TransactionSeeder"
 import ReviewSeeder from "./ReviewSeeder"
+import UserProfileSeeder from "./UserProfileSeeder"
 
 class DatabaseSeeder extends Seeder {
   public override async run(em: EntityManager): Promise<void> {
@@ -21,7 +22,8 @@ class DatabaseSeeder extends Seeder {
       MenuSeeder,
       BookingSeeder,
       TransactionSeeder,
-      ReviewSeeder
+      ReviewSeeder,
+      UserProfileSeeder
     ])
   }
 }

@@ -1,0 +1,62 @@
+[
+  {
+    "userId": "43226d9b-4893-4af9-8d09-c821330ddac5",
+    "user": "a08d800c-1539-45fe-b27b-dbb624969a08",
+    "name": "Wildan Frananda",
+    "imageUrl": "",
+    "address": {
+      "location": "JL. Contoh 123"
+    },
+    "walletBallance": 1000000
+  },
+  {
+    "userId": "2e4220ab-bf71-4e00-a621-e4380c44767b",
+    "user": "013a782f-cd8d-42e2-9e42-f95dc526a973",
+    "name": "Staff",
+    "imageUrl": "",
+    "address": {
+      "location": "JL. Contoh 123"
+    },
+    "walletBallance": 1000000
+  },
+  {
+    "userId": "117fd3eb-a962-4b14-a3ce-e089183c8712",
+    "user": "117fd3eb-a962-4b14-a3ce-e089183c873a",
+    "name": "Wildan Frananda",
+    "imageUrl": "",
+    "address": {
+      "location": "JL. Contoh 123"
+    },
+    "walletBallance": 1000000
+  },
+  {
+    "userId": "b0b17eda-5f15-4e77-9369-a83c4467e712",
+    "user": "b0b17eda-5f15-4e77-9369-a83c4467e79d",
+    "name": "Wildan Frananda",
+    "imageUrl": "",
+    "address": {
+      "location": "JL. Contoh 123"
+    },
+    "walletBallance": 1000000
+  },
+  {
+    "userId": "b0b17eda-5f15-4e77-9369-a83c4467e767",
+    "user": "b0b17eda-5f15-4e77-9369-a83c4467e745",
+    "name": "User",
+    "imageUrl": "",
+    "address": {
+      "location": "JL. Contoh 123"
+    },
+    "walletBallance": 1000000
+  },
+  {
+    "userId": "43226d9b-4893-4af9-8d09-c821330dda12",
+    "user": "a08d800c-1539-45fe-b27b-dbb624969a12",
+    "name": "Admin",
+    "imageUrl": "",
+    "address": {
+      "location": "JL. Contoh 123"
+    },
+    "walletBallance": 1000000
+  }
+]
