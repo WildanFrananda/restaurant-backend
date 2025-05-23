@@ -69,7 +69,7 @@ class BookingRepositoryImpl extends BookingRepository {
     page: number
   ): Promise<[Loaded<Booking, "user" | "chef" | "table" | "menu", "*", never>[], number]> {
     return await this.bookingRepository.findAndCount(conditions, {
-      populate: ["user", "menu", "table", "chef"],
+      populate: ["user.profile", "menu", "table", "chef"],
       orderBy: { createdAt: "DESC" },
       limit,
       offset: (page - 1) * limit
