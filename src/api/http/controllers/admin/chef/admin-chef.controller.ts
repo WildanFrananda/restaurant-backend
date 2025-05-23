@@ -27,7 +27,7 @@ class AdminChefController {
   }
 
   @Delete(":id")
-  public async deleteChef(@Param(":id") id: string): Promise<{ message: string }> {
+  public async deleteChef(@Param("id") id: string): Promise<{ message: string }> {
     await this.adminChefService.deleteChef(id)
 
     return { message: "Chef deleted successfully" }
